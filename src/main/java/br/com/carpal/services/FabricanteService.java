@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.carpal.model.Fabricante;
-import br.com.carpal.model.Fabricante;
-import br.com.carpal.repository.FabricanteRepository;
 import br.com.carpal.repository.FabricanteRepository;
 
 @Service
@@ -18,7 +16,11 @@ public class FabricanteService {
 
 	/* Salvar */
 	public Fabricante salvar(Fabricante obj) {
-		return repository.save(obj);
+		if(obj.getId() == null){
+			return repository.save(obj);
+		}else {
+			return repository.update(obj);
+		}
 	}
 
 	/* Listar Todos */
@@ -38,7 +40,7 @@ public class FabricanteService {
 	}
 
 	/* Delete */
-	public void remove(Long id) throws Exception {
+	public void remove(Long id)  {
 		Fabricante obj = new Fabricante();
 		obj.setId(id);
 		repository.delete(id);

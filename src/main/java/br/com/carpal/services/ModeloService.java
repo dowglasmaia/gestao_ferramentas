@@ -9,14 +9,18 @@ import br.com.carpal.model.Modelo;
 import br.com.carpal.repository.ModeloRepository;
 
 @Service
-public class MoldeService {
+public class ModeloService {
 
 	@Autowired
 	private ModeloRepository repository;
 
 	/* Salvar */
 	public Modelo salvar(Modelo obj) {
-		return repository.save(obj);
+		if(obj.getId() == null){
+			return repository.save(obj);
+		}else {
+			return repository.update(obj);
+		}
 	}
 
 	/* Listar Todos */
@@ -36,7 +40,7 @@ public class MoldeService {
 	}
 
 	/* Delete */
-	public void remove(Long id) throws Exception {
+	public void remove(Long id) {
 		Modelo obj = new Modelo();
 		obj.setId(id);
 		repository.delete(id);
