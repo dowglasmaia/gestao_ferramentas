@@ -5,39 +5,41 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.carpal.model.Cargo;
-import br.com.carpal.repository.CargoRepository;
+import br.com.carpal.model.Fabricante;
+import br.com.carpal.model.Fabricante;
+import br.com.carpal.repository.FabricanteRepository;
+import br.com.carpal.repository.FabricanteRepository;
 
 @Service
-public class CargoService {
+public class FabricanteService {
 
 	@Autowired
-	private CargoRepository repository;
+	private FabricanteRepository repository;
 
 	/* Salvar */
-	public Cargo salvar(Cargo obj) {
+	public Fabricante salvar(Fabricante obj) {
 		return repository.save(obj);
 	}
 
 	/* Listar Todos */
-	public List<Cargo> findAll() {
+	public List<Fabricante> findAll() {
 		return repository.findAll();
 	}
 
 	/* Buscar por ID */
-	public Cargo buscarPorID(Long id) {
+	public Fabricante buscarPorID(Long id) {
 		return repository.findById(id);
 	}
 
 	/* update */
-	public Cargo update(Cargo obj) {
-		Cargo newObj = buscarPorID(obj.getId());
+	public Fabricante update(Fabricante obj) {
+		Fabricante newObj = buscarPorID(obj.getId());
 		return repository.update(newObj);
 	}
 
 	/* Delete */
 	public void remove(Long id) throws Exception {
-		Cargo obj = new Cargo();
+		Fabricante obj = new Fabricante();
 		obj.setId(id);
 		repository.delete(id);
 
