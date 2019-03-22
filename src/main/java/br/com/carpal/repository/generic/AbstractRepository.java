@@ -8,55 +8,62 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.transaction.annotation.Transactional;
+
 /** Autor: Dowglas Maia - Skype: live:dowglasmaia */
 /** Class DAO Gerenico */
 
 public abstract class AbstractRepository<T, PK extends Serializable> {
 
-	/* == Auxilar nas Consultas Generica, Recuperando a Class de Instacia == */
+	// Metodo auxilar para Consultas Genericas, Recuperando a Class de Instancia
 	@SuppressWarnings("unchecked")
-	private final Class<T> entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+	private final Class<T> entidadeClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
 			.getActualTypeArguments()[0];
 
+	/* Instanciando um EntityManager */
 	@PersistenceContext
-	private EntityManager entityManager;
+	protected EntityManager manager;
 
-	protected EntityManager getEntityManager() {
-		return entityManager;
+	public EntityManager getManager() {
+		return manager;
 	}
 
-	// Salvar
-	public void save(T entity) {
-		entityManager.persist(entity);
+	/* salvar */
+	@Transactional(rollbackFor = { Exception.class })
+	public T save(T obj) {
+		manager.persist(obj);
+		return obj;
 	}
 
-	// Atualizar
-	public void update(T entity) {
-		entityManager.merge(entity);
+	/* Atualizar */
+	@Transactional(rollbackFor = { Exception.class })
+	public T update(T obj) {
+		manager.merge(obj);
+		return obj;
 	}
 
-	// Deletar
+	/* Deletar */
+	@Transactional(rollbackFor = { Exception.class })
 	public void delete(PK id) {
-		entityManager.remove(entityManager.getReference(entityClass, id));
+		manager.remove(manager.getReference(entidadeClass, id));
 	}
 
-	// Buscar Por Id
+	/* Buscar por ID */
 	public T findById(PK id) {
-		return entityManager.find(entityClass, id);
+		return manager.find(entidadeClass, id);
 	}
 
-	// Buscar Todos
+	/* Buscar Todos */
 	public List<T> findAll() {
-		return entityManager.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
+		return manager.createQuery("from " + entidadeClass.getSimpleName(), entidadeClass).getResultList();
 	}
 
-	// consulta dinamica
-	protected List<T> createQuery(String jpql, Object... params) {
-		TypedQuery<T> query = entityManager.createQuery(jpql, entityClass);
+	/* Consultar Dinamica */
+	protected List<T> createDinamicQuery(String jpql, Object... params) {
+		TypedQuery<T> query = manager.createQuery(jpql, entidadeClass);
 		for (int i = 0; i < params.length; i++) {
 			query.setParameter(i + 1, params[i]);
 		}
 		return query.getResultList();
 	}
-
 }
