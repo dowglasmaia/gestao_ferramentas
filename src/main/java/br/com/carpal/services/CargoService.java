@@ -16,7 +16,12 @@ public class CargoService {
 
 	/* Salvar */
 	public Cargo salvar(Cargo obj) {
-		return repository.save(obj);
+		if(obj.getId() == null){
+			return repository.save(obj);
+		}else {
+			return repository.update(obj);
+		}
+		
 	}
 
 	/* Listar Todos */
@@ -36,7 +41,7 @@ public class CargoService {
 	}
 
 	/* Delete */
-	public void remove(Long id) throws Exception {
+	public void remove(Long id) {
 		Cargo obj = new Cargo();
 		obj.setId(id);
 		repository.delete(id);
