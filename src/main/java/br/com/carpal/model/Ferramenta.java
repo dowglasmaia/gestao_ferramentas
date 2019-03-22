@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -33,12 +34,24 @@ public class Ferramenta implements Serializable {
 	@Column(precision = 12, scale = 2)
 	private Double valorCusto;
 
+	@ManyToOne
+	private Fabricante fabricante;
+
+	@ManyToOne
+	private Empresa empresa;
+
+	@ManyToOne
+	private Locacao locacao;
+
+	@ManyToOne
+	private Modelo modelo;
+
 	public Ferramenta() {
-		
+
 	}
 
 	public Ferramenta(Long id, @NotEmpty String nome, Integer codigoCNH, Integer codigoInterno, Integer estoque,
-			Double valorCusto) {
+			Double valorCusto, Fabricante fabricante, Empresa empresa, Locacao locacao, Modelo modelo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -46,6 +59,10 @@ public class Ferramenta implements Serializable {
 		this.codigoInterno = codigoInterno;
 		this.estoque = estoque;
 		this.valorCusto = valorCusto;
+		this.fabricante = fabricante;
+		this.empresa = empresa;
+		this.locacao = locacao;
+		this.modelo = modelo;
 	}
 
 	public Long getId() {
@@ -94,6 +111,38 @@ public class Ferramenta implements Serializable {
 
 	public void setValorCusto(Double valorCusto) {
 		this.valorCusto = valorCusto;
+	}
+
+	public Fabricante getFabricante() {
+		return fabricante;
+	}
+
+	public void setFabricante(Fabricante fabricante) {
+		this.fabricante = fabricante;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public Locacao getLocacao() {
+		return locacao;
+	}
+
+	public void setLocacao(Locacao locacao) {
+		this.locacao = locacao;
+	}
+
+	public Modelo getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(Modelo modelo) {
+		this.modelo = modelo;
 	}
 
 	@Override

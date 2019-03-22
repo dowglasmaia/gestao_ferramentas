@@ -1,13 +1,18 @@
 package br.com.carpal.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Cargo implements Serializable {
@@ -21,14 +26,27 @@ public class Cargo implements Serializable {
 	@NotEmpty
 	private String nome;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "cargo")
+	private List<Usuario> usuarios = new ArrayList<>();
+
 	public Cargo() {
-		
+
 	}
+	
 
 	public Cargo(Long id, @NotEmpty String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	public Long getId() {

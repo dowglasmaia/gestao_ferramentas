@@ -1,10 +1,15 @@
 package br.com.carpal.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Empresa implements Serializable {
@@ -20,6 +25,14 @@ public class Empresa implements Serializable {
 	@Column(nullable = false, length = 100)
 	private String cnpj;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "empresa")
+	private List<Usuario> usuarios = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "empresa")
+	private List<Ferramenta> ferramentas = new ArrayList<>();
+
 	public Empresa() {
 
 	}
@@ -29,6 +42,14 @@ public class Empresa implements Serializable {
 		this.codFilial = codFilial;
 		this.descricao = descricao;
 		this.cnpj = cnpj;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	public Long getCodFilial() {
@@ -53,6 +74,14 @@ public class Empresa implements Serializable {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+	}
+
+	public List<Ferramenta> getFerramentas() {
+		return ferramentas;
+	}
+
+	public void setFerramentas(List<Ferramenta> ferramentas) {
+		this.ferramentas = ferramentas;
 	}
 
 	@Override

@@ -1,13 +1,19 @@
 package br.com.carpal.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Fabricante implements Serializable {
@@ -25,8 +31,12 @@ public class Fabricante implements Serializable {
 	@NotEmpty
 	private String site;
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "fabricante", fetch = FetchType.LAZY)
+	private List<Ferramenta> ferramentas = new ArrayList<Ferramenta>();
+
 	public Fabricante() {
-		
+
 	}
 
 	public Fabricante(Long id, @NotEmpty String nome, @NotEmpty String site) {
@@ -34,6 +44,14 @@ public class Fabricante implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.site = site;
+	}
+
+	public List<Ferramenta> getFerramentas() {
+		return ferramentas;
+	}
+
+	public void setFerramentas(List<Ferramenta> ferramentas) {
+		this.ferramentas = ferramentas;
 	}
 
 	public Long getId() {
