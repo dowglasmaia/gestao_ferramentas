@@ -5,43 +5,44 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.carpal.model.Modelo;
-import br.com.carpal.repository.ModeloRepository;
+import br.com.carpal.model.Ferramenta;
+import br.com.carpal.repository.FerramentaRepository;
 
 @Service
-public class ModeloService {
+public class FerramentaService {
 
 	@Autowired
-	private ModeloRepository repository;
+	private FerramentaRepository repository;
 
 	/* Salvar */
-	public Modelo salvar(Modelo obj) {
+	public Ferramenta salvar(Ferramenta obj) {
 		if(obj.getId() == null){
 			return repository.save(obj);
 		}else {
 			return repository.update(obj);
 		}
+		
 	}
 
 	/* Listar Todos */
-	public List<Modelo> findAll() {
+	public List<Ferramenta> findAll() {
 		return repository.findAll();
 	}
 
 	/* Buscar por ID */
-	public Modelo buscarPorID(Long id) {
+	public Ferramenta buscarPorID(Long id) {
 		return repository.findById(id);
 	}
 
 	/* update */
-	public Modelo update(Modelo obj) {
-		Modelo newObj = buscarPorID(obj.getId());
+	public Ferramenta update(Ferramenta obj) {
+		Ferramenta newObj = buscarPorID(obj.getId());
 		return repository.update(newObj);
 	}
 
 	/* Delete */
 	public void remove(Long id) {
-		Modelo obj = new Modelo();
+		Ferramenta obj = new Ferramenta();
 		obj.setId(id);
 		repository.delete(id);
 

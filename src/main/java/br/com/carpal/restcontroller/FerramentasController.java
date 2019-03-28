@@ -12,31 +12,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.carpal.model.Modelo;
-import br.com.carpal.services.ModeloService;
+import br.com.carpal.model.Ferramenta;
+import br.com.carpal.services.FerramentaService;
 
 @RestController
-@RequestMapping("/modelos")
-public class ModeloController {
+@RequestMapping("/ferramentas")
+public class FerramentasController {
 
 	@Autowired
-	private ModeloService service;
+	private FerramentaService service;
 
 	/* Endpoint - Listar Todos */
 	@GetMapping
-	public ResponseEntity<List<Modelo>> listarTodos() {
-		List<Modelo> list = service.findAll();
+	public ResponseEntity<List<Ferramenta>> listarTodos() {
+		List<Ferramenta> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping("/{id}")
-	public Modelo buscarPorId(@PathVariable Long id) {
+	public Ferramenta buscarPorId(@PathVariable Long id) {
 		return service.buscarPorID(id);
 	}
 
 	@PostMapping
-	public Modelo salvar(@RequestBody Modelo obj) {
-		return service.salvar(obj);
+	public Ferramenta salvar(@RequestBody Ferramenta Ferramenta) {
+		return service.salvar(Ferramenta);
 	}
 
 	@DeleteMapping("/{id}")

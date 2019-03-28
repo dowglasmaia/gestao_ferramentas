@@ -21,6 +21,10 @@ public class Ferramenta implements Serializable {
 	@Column(length = 100, nullable = false)
 	@NotEmpty
 	private String nome;
+	
+	@Column(length = 100, nullable = false)
+	@NotEmpty
+	private String modelo;
 
 	@Column(length = 20)
 	private Integer codigoCNH;
@@ -43,15 +47,14 @@ public class Ferramenta implements Serializable {
 	@ManyToOne
 	private Locacao locacao;
 
-	@ManyToOne
-	private Modelo modelo;
+	
 
 	public Ferramenta() {
 
 	}
 
 	public Ferramenta(Long id, @NotEmpty String nome, Integer codigoCNH, Integer codigoInterno, Integer estoque,
-			Double valorCusto, Fabricante fabricante, Empresa empresa, Locacao locacao, Modelo modelo) {
+			Double valorCusto, Fabricante fabricante, Empresa empresa, Locacao locacao, String modelo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -62,6 +65,15 @@ public class Ferramenta implements Serializable {
 		this.fabricante = fabricante;
 		this.empresa = empresa;
 		this.locacao = locacao;
+		this.modelo = modelo;
+	}
+
+	
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
 
@@ -137,13 +149,7 @@ public class Ferramenta implements Serializable {
 		this.locacao = locacao;
 	}
 
-	public Modelo getModelo() {
-		return modelo;
-	}
 
-	public void setModelo(Modelo modelo) {
-		this.modelo = modelo;
-	}
 
 	@Override
 	public int hashCode() {
