@@ -16,7 +16,7 @@ public class FerramentaService {
 
 	/* Salvar */
 	public Ferramenta salvar(Ferramenta obj) {
-		if(obj.getId() == null){
+		if(obj.getCodigo() == null){
 			return repository.save(obj);
 		}else {
 			return repository.update(obj);
@@ -36,14 +36,14 @@ public class FerramentaService {
 
 	/* update */
 	public Ferramenta update(Ferramenta obj) {
-		Ferramenta newObj = buscarPorID(obj.getId());
+		Ferramenta newObj = buscarPorID(obj.getCodigo());
 		return repository.update(newObj);
 	}
 
 	/* Delete */
 	public void remove(Long id) {
 		Ferramenta obj = new Ferramenta();
-		obj.setId(id);
+		obj.setCodigo(id);
 		repository.delete(id);
 
 	}

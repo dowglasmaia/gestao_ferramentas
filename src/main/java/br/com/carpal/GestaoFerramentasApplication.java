@@ -16,11 +16,11 @@ import br.com.carpal.services.FerramentaService;
 public class GestaoFerramentasApplication implements CommandLineRunner {
 
 	@Autowired
-	private CargoService cargoService;	
-	
+	private CargoService cargoService;
+
 	@Autowired
 	private FabricanteService fabricanteService;
-	
+
 	@Autowired
 	private FerramentaService fmService;
 
@@ -32,20 +32,25 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		Cargo c1 = new Cargo(null, "Assessor de TI");
-		Cargo c2 = new Cargo(null, "Analista de TI");		
+		Cargo c2 = new Cargo(null, "Analista de TI");
 		cargoService.salvar(c1);
 		cargoService.salvar(c2);
-		
+
 		Fabricante f1 = new Fabricante(null, "CNH", "www.cnh.com.br");
 		fabricanteService.salvar(f1);
-		
-		/* Ferramentas*/
-		Ferramenta fm1 = new Ferramenta(null, "chave de Contorle G4", 0145, 250, 50, 250.20, f1 , null, null, "M-560 Turbo");
-		
+
+		/* Ferramentas */
+		Ferramenta fm1 = new Ferramenta(null, "NM Test01", "tes01", 250, "Usar para Remover Prego", 20, 500.0, f1, null, null);
+
 		fmService.salvar(fm1);
-		
-		
-		
+
+		Ferramenta fm2 = new Ferramenta(null, "NM Test02", "tes02", 250, "Usar para Remover Teto", 20, 50.0, f1, null, null);
+
+		fmService.salvar(fm2);
+
+		Ferramenta fm3 = new Ferramenta(null, "NM Test03", "tes03", 250, "Usar para Remover Prego", 20, 500.0, f1, null, null);
+
+		fmService.salvar(fm3);
 
 	}
 
