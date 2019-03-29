@@ -29,10 +29,6 @@ public class Empresa implements Serializable {
 	@OneToMany(mappedBy = "empresa")
 	private List<Usuario> usuarios = new ArrayList<>();
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "empresa")
-	private List<Ferramenta> ferramentas = new ArrayList<>();
-
 	public Empresa() {
 
 	}
@@ -74,14 +70,6 @@ public class Empresa implements Serializable {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
-	}
-
-	public List<Ferramenta> getFerramentas() {
-		return ferramentas;
-	}
-
-	public void setFerramentas(List<Ferramenta> ferramentas) {
-		this.ferramentas = ferramentas;
 	}
 
 	@Override

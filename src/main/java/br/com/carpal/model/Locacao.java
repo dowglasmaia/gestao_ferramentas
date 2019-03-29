@@ -2,8 +2,6 @@ package br.com.carpal.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -36,9 +33,6 @@ public class Locacao implements Serializable {
 
 	@ManyToOne
 	private Usuario usuario;
-
-	@OneToMany(mappedBy = "locacao")
-	private List<Ferramenta> ferramentas = new ArrayList<>();
 
 	public Locacao() {
 
@@ -92,14 +86,6 @@ public class Locacao implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<Ferramenta> getFerramentas() {
-		return ferramentas;
-	}
-
-	public void setFerramentas(List<Ferramenta> ferramentas) {
-		this.ferramentas = ferramentas;
 	}
 
 	@Override

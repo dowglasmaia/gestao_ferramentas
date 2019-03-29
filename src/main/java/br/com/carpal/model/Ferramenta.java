@@ -33,6 +33,9 @@ public class Ferramenta implements Serializable {
 	private String aplicabilidade;
 
 	@Column(length = 20)
+	private Integer quantidade;
+
+	@Column(length = 20)
 	private Integer estoque;
 
 	@Column(precision = 12, scale = 2)
@@ -41,30 +44,22 @@ public class Ferramenta implements Serializable {
 	@ManyToOne
 	private Fabricante fabricante;
 
-	@ManyToOne
-	private Empresa empresa;
-
-	@ManyToOne
-	private Locacao locacao;
-
 	public Ferramenta() {
 
 	}
 
 	public Ferramenta(Long codigo, @NotEmpty String descricao, @NotEmpty String modelo, Integer codigoNh,
-			String aplicabilidade, Integer estoque, Double preco, Fabricante fabricante, Empresa empresa,
-			Locacao locacao) {
-		super();
+			String aplicabilidade, Integer quantidade, Integer estoque, Double preco, Fabricante fabricante) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.modelo = modelo;
 		this.codigoNh = codigoNh;
 		this.aplicabilidade = aplicabilidade;
+		this.quantidade = quantidade;
 		this.estoque = estoque;
 		this.preco = preco;
 		this.fabricante = fabricante;
-		this.empresa = empresa;
-		this.locacao = locacao;
+
 	}
 
 	public Long getCodigo() {
@@ -107,11 +102,19 @@ public class Ferramenta implements Serializable {
 		this.aplicabilidade = aplicabilidade;
 	}
 
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
 	public Integer getEstoque() {
 		return estoque;
 	}
 
-	public void setEstoque(Integer estoque) {
+	public void setEstoque(Integer estoque) {		
 		this.estoque = estoque;
 	}
 
@@ -131,20 +134,5 @@ public class Ferramenta implements Serializable {
 		this.fabricante = fabricante;
 	}
 
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
-	public Locacao getLocacao() {
-		return locacao;
-	}
-
-	public void setLocacao(Locacao locacao) {
-		this.locacao = locacao;
-	}
 
 }

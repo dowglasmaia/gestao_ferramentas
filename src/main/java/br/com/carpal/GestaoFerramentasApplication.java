@@ -40,15 +40,15 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 		fabricanteService.salvar(f1);
 
 		/* Ferramentas */
-		Ferramenta fm1 = new Ferramenta(null, "NM Test01", "tes01", 250, "Usar para Remover Prego", 20, 500.0, f1, null, null);
+		Ferramenta fm1 = new Ferramenta(null, "NM Test01", "tes01", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
 
 		fmService.salvar(fm1);
 
-		Ferramenta fm2 = new Ferramenta(null, "NM Test02", "tes02", 250, "Usar para Remover Teto", 20, 50.0, f1, null, null);
+		Ferramenta fm2 = new Ferramenta(null, "NM Test02", "tes02", 250, "Usar para Remover Teto", 10, 20, 50.0, f1);
 
 		fmService.salvar(fm2);
 
-		Ferramenta fm3 = new Ferramenta(null, "NM Test03", "tes03", 250, "Usar para Remover Prego", 20, 500.0, f1, null, null);
+		Ferramenta fm3 = new Ferramenta(null, "NM Test03", "tes03", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
 
 		fmService.salvar(fm3);
 

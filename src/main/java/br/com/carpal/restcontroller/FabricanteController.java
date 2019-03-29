@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.carpal.model.Fabricante;
@@ -33,7 +34,13 @@ public class FabricanteController {
 	public Fabricante buscarPorId(@PathVariable Long id) {
 		return service.buscarPorID(id);
 	}
-
+	
+	/* Buscar por nome - como paramentro*/
+	@GetMapping("/name")
+	public ResponseEntity<List<Fabricante>> findByName(@RequestParam(value = "nome") String nome) {
+		List<Fabricante> list = service.buscarPorNome(nome);
+		return ResponseEntity.ok().body(list);
+	}
 	@PostMapping
 	public Fabricante salvar(@RequestBody Fabricante obj) {
 		return service.salvar(obj);

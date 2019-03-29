@@ -24,11 +24,11 @@ public class Fabricante implements Serializable {
 	private Long id;
 
 	@Column(length = 80, nullable = false)
-	@NotEmpty
+	//@NotEmpty
 	private String nome;
 
 	@Column(length = 16, nullable = false)
-	@NotEmpty
+	//@NotEmpty
 	private String site;
 
 	@JsonIgnore
@@ -39,7 +39,7 @@ public class Fabricante implements Serializable {
 
 	}
 
-	public Fabricante(Long id, @NotEmpty String nome, @NotEmpty String site) {
+	public Fabricante(Long id,  String nome,String site) {
 		super();
 		this.id = id;
 		this.nome = nome;
