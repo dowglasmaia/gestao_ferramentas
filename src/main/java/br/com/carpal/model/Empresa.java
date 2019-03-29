@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -15,9 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Empresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(unique = true, nullable = false)
-	private Long codFilial;
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long codigo;
 
 	@Column(nullable = false, length = 100)
 	private String descricao;
@@ -30,30 +31,21 @@ public class Empresa implements Serializable {
 	private List<Usuario> usuarios = new ArrayList<>();
 
 	public Empresa() {
-
 	}
 
-	public Empresa(Long codFilial, String descricao, String cnpj) {
+	public Empresa(Long codigo, String descricao, String cnpj) {
 		super();
-		this.codFilial = codFilial;
+		this.codigo = codigo;
 		this.descricao = descricao;
 		this.cnpj = cnpj;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return usuarios;
+	public Long getCodigo() {
+		return codigo;
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-
-	public Long getCodFilial() {
-		return codFilial;
-	}
-
-	public void setCodFilial(Long codFilial) {
-		this.codFilial = codFilial;
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getDescricao() {
@@ -72,29 +64,12 @@ public class Empresa implements Serializable {
 		this.cnpj = cnpj;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((codFilial == null) ? 0 : codFilial.hashCode());
-		return result;
+	public List<Usuario> getUsuarios() {
+		return usuarios;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Empresa other = (Empresa) obj;
-		if (codFilial == null) {
-			if (other.codFilial != null)
-				return false;
-		} else if (!codFilial.equals(other.codFilial))
-			return false;
-		return true;
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 }

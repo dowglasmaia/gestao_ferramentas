@@ -32,6 +32,7 @@ public abstract class AbstractRepository<T, PK extends Serializable> {
 	@Transactional(rollbackFor = { Exception.class })
 	public T save(T obj) {
 		manager.persist(obj);
+		manager.flush();
 		return obj;
 	}
 
@@ -39,6 +40,7 @@ public abstract class AbstractRepository<T, PK extends Serializable> {
 	@Transactional(rollbackFor = { Exception.class })
 	public T update(T obj) {
 		manager.merge(obj);
+		manager.flush();
 		return obj;
 	}
 

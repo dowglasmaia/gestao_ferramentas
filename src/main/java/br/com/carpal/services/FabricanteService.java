@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import br.com.carpal.model.Fabricante;
 import br.com.carpal.repository.FabricanteRepository;
@@ -16,7 +15,6 @@ public class FabricanteService {
 	private FabricanteRepository repository;
 
 	/* Salvar */
-	@Transactional(rollbackFor = {Exception.class})
 	public Fabricante salvar(Fabricante obj) {
 		if (obj.getId() == null) {
 			return repository.save(obj);
@@ -40,15 +38,9 @@ public class FabricanteService {
 		return repository.findByNome(nome);
 	}
 
-	/* update */
-	@Transactional(rollbackFor = {Exception.class})
-	public Fabricante update(Fabricante obj) {
-		Fabricante newObj = buscarPorID(obj.getId());
-		return repository.update(newObj);
-	}
+
 
 	/* Delete */
-	@Transactional(rollbackFor = {Exception.class})
 	public void remove(Long id) {
 		Fabricante obj = new Fabricante();
 		obj.setId(id);
