@@ -12,7 +12,7 @@ public class FabricanteRepository extends AbstractRepository<Fabricante, Long> {
 
 	// Buscar Por Nome Usando a Create Quere criada no AbatractDAO
 	public List<Fabricante> findByNome(String nome) {
-		return createDinamicQuery("select f from Fabricante f where f.nome like concat('%',?1,'%')", nome);
+		return createDinamicQuery("select f from Fabricante f where lower(f.nome) like concat('%',lower(?1),'%')", nome);
 
 	}
 

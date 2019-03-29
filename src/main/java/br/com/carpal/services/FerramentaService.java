@@ -19,10 +19,10 @@ public class FerramentaService {
 	@Transactional(rollbackFor = { Exception.class })
 	public Ferramenta salvar(Ferramenta obj) {
 		if (obj.getCodigo() == null) {
-			//obj.setEstoque(obj.getEstoque() + obj.getQuantidade()); /*Atualizando o estoque*/
+			obj.setEstoque(obj.getQuantidade()); /*Atualizando o estoque*/
 			return repository.save(obj);
 		} else {
-			//obj.setEstoque(obj.getEstoque() + obj.getQuantidade()); /*Atualizando o estoque*/
+			obj.setEstoque(obj.getEstoque() + obj.getQuantidade()); /*Atualizando o estoque*/
 			return repository.update(obj);
 		}
 
