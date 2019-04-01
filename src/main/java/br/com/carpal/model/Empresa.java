@@ -19,9 +19,9 @@ public class Empresa implements Serializable {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long codigo;
-
+	
 	@Column(nullable = false, length = 100)
-	private String descricao;
+	private String nome;	
 
 	@Column(nullable = false, length = 100)
 	private String cnpj;
@@ -33,10 +33,10 @@ public class Empresa implements Serializable {
 	public Empresa() {
 	}
 
-	public Empresa(Long codigo, String descricao, String cnpj) {
+	public Empresa(Long codigo, String nome, String cnpj) {
 		super();
 		this.codigo = codigo;
-		this.descricao = descricao;
+		this.nome = nome;
 		this.cnpj = cnpj;
 	}
 
@@ -48,12 +48,14 @@ public class Empresa implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	
+
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getCnpj() {

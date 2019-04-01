@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.carpal.model.Cargo;
+import br.com.carpal.model.Empresa;
 import br.com.carpal.repository.CargoRepository;
 
 @Service
@@ -35,11 +36,9 @@ public class CargoService {
 		return repository.findById(id);
 	}
 
-	/* update */
-	
-	public Cargo update(Cargo obj) {
-		Cargo newObj = buscarPorID(obj.getId());
-		return repository.update(newObj);
+	/* Buscar por nome */
+	public List<Cargo> buscarPorNome(String nome) {
+		return repository.findByNome(nome);
 	}
 
 	/* Delete */
