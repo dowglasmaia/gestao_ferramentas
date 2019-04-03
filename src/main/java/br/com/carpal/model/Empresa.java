@@ -17,11 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Empresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-	
+
+	private Integer codFilial;
+
 	@Column(nullable = false, length = 100)
-	private String nome;	
+	private String nome;
 
 	@Column(nullable = false, length = 100)
 	private String cnpj;
@@ -33,11 +36,12 @@ public class Empresa implements Serializable {
 	public Empresa() {
 	}
 
-	public Empresa(Long codigo, String nome, String cnpj) {
+	public Empresa(Long codigo, Integer codFilial, String nome, String cnpj) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
 		this.cnpj = cnpj;
+		this.codFilial = codFilial;
 	}
 
 	public Long getCodigo() {
@@ -48,7 +52,13 @@ public class Empresa implements Serializable {
 		this.codigo = codigo;
 	}
 
-	
+	public Integer getCodFilial() {
+		return codFilial;
+	}
+
+	public void setCodFilial(Integer codFilial) {
+		this.codFilial = codFilial;
+	}
 
 	public String getNome() {
 		return nome;

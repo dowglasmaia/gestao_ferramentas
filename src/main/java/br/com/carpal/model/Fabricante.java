@@ -20,7 +20,7 @@ public class Fabricante implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long codigo;
 
 	@Column(length = 80, nullable = false)
 	//@NotEmpty
@@ -38,9 +38,9 @@ public class Fabricante implements Serializable {
 
 	}
 
-	public Fabricante(Long id,  String nome,String site) {
+	public Fabricante(Long codigo,  String nome,String site) {
 		super();
-		this.id = id;
+		this.codigo = codigo;
 		this.nome = nome;
 		this.site = site;
 	}
@@ -53,12 +53,14 @@ public class Fabricante implements Serializable {
 		this.ferramentas = ferramentas;
 	}
 
-	public Long getId() {
-		return id;
+	
+
+	public Long getCodigo() {
+		return codigo;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -81,7 +83,7 @@ public class Fabricante implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 
@@ -94,12 +96,14 @@ public class Fabricante implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Fabricante other = (Fabricante) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (codigo == null) {
+			if (other.codigo != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}
+
+
 
 }

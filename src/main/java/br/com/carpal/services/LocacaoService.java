@@ -5,17 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.carpal.model.Fabricante;
-import br.com.carpal.repository.FabricanteRepository;
+import br.com.carpal.model.Locacao;
+import br.com.carpal.repository.LocacaoRepository;
 
 @Service
-public class FabricanteService {
+public class LocacaoService {
 
 	@Autowired
-	private FabricanteRepository repository;
+	private LocacaoRepository repository;
 
 	/* Salvar */
-	public Fabricante salvar(Fabricante obj) {
+	public Locacao salvar(Locacao obj) {
 		if (obj.getCodigo() == null) {
 			return repository.save(obj);
 		} else {
@@ -24,25 +24,24 @@ public class FabricanteService {
 	}
 
 	/* Listar Todos */
-	public List<Fabricante> findAll() {
+	public List<Locacao> findAll() {
 		return repository.findAll();
 	}
 
 	/* Buscar por ID */
-	public Fabricante buscarPorID(Long id) {
+	public Locacao buscarPorID(Long id) {
 		return repository.findById(id);
 	}
 
-	/* Buscar por nome */
-	public List<Fabricante> buscarPorNome(String nome) {
-		return repository.findByNome(nome);
+	/* Lista de Locações Por Usuario */
+	public List<Locacao> findByUsuarios() {
+		//impl  logica
+		return null;
 	}
-
-
 
 	/* Delete */
 	public void remove(Long id) {
-		Fabricante obj = new Fabricante();
+		Locacao obj = new Locacao();
 		obj.setCodigo(id);
 		repository.delete(id);
 

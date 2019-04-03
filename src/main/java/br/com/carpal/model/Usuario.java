@@ -33,7 +33,7 @@ public class Usuario implements Serializable {
 	@NotEmpty
 	private String cpf;
 
-	@Column(length = 16, nullable = false)
+	@Column(length = 17, nullable = false)
 	@NotEmpty
 	private String contato;
 

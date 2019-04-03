@@ -17,10 +17,10 @@ public class FerramentaService {
 	/* Salvar */
 	public Ferramenta salvar(Ferramenta obj) {
 		if (obj.getCodigo() == null) {
-			obj.setEstoque(obj.getQuantidade()); /*Atualizando o estoque*/
+			obj.setEstoque(obj.getQuantidade()); /* Atualizando o estoque */
 			return repository.save(obj);
 		} else {
-			obj.setEstoque(obj.getEstoque() + obj.getQuantidade()); /*Atualizando o estoque*/
+			obj.setEstoque(obj.getEstoque() + obj.getQuantidade()); /* Atualizando o estoque */
 			return repository.update(obj);
 		}
 
@@ -36,6 +36,10 @@ public class FerramentaService {
 		return repository.findById(id);
 	}
 
+	/* Buscar por Descricao */
+	public List<Ferramenta> buscarPorDescricao(String descricao) {
+		return repository.findByNome(descricao);
+	}
 
 	/* Delete */
 	public void remove(Long id) {

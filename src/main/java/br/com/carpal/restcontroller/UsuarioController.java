@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.carpal.model.Cargo;
 import br.com.carpal.model.Usuario;
 import br.com.carpal.services.UsuarioService;
 
@@ -34,6 +36,13 @@ public class UsuarioController {
 		return service.buscarPorID(id);
 	}
 
+	/* Buscar por nome - como paramentro*/
+	@GetMapping("/name")
+	public ResponseEntity<List<Usuario>> findByName(@RequestParam(value = "nome") String nome) {
+		List<Usuario> list = service.buscarPorNome(nome);
+		return ResponseEntity.ok().body(list);
+	}
+	
 	@PostMapping
 	public Usuario salvar(@RequestBody Usuario usuario) {
 		return service.salvar(usuario);

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.carpal.model.Cargo;
-import br.com.carpal.model.Empresa;
 import br.com.carpal.repository.CargoRepository;
 
 @Service
@@ -14,16 +13,14 @@ public class CargoService {
 
 	@Autowired
 	private CargoRepository repository;
-
-	/* Salvar */
 	
+	/* Salvar */	
 	public Cargo salvar(Cargo obj) {
-		if(obj.getId() == null){
+		if(obj.getCodigo() == null){
 			return repository.save(obj);
 		}else {
 			return repository.update(obj);
-		}
-		
+		}		
 	}
 
 	/* Listar Todos */
@@ -41,11 +38,10 @@ public class CargoService {
 		return repository.findByNome(nome);
 	}
 
-	/* Delete */
-	
+	/* Delete */	
 	public void remove(Long id) {
 		Cargo obj = new Cargo();
-		obj.setId(id);
+		obj.setCodigo(id);
 		repository.delete(id);
 
 	}

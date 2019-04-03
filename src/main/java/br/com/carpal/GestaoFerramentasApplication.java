@@ -60,7 +60,10 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 		Cargo c1 = new Cargo(null, "Assessor de TI");
 		Cargo c2 = new Cargo(null, "Analista de TI");
 		
-		Empresa ep1 = new Empresa(null, "Goiania", "012332123");		
+		Empresa ep1 = new Empresa(null, 120, "Goiania", "012332123");
+		Empresa ep2 = new Empresa(null, 025, "Goias", "012332123");
+		Empresa ep3 = new Empresa(null, 001, "Anapolis", "012332123");
+		Empresa ep4 = new Empresa(null, 789, "Imtubiara", "012332123");
 
 		Usuario user1 = new Usuario(null, 320, "Maia", "012", "986", c1, ep1);
 		
@@ -70,6 +73,10 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 		cargoService.salvar(c1);
 		cargoService.salvar(c2);		
 		empService.salvar(ep1);
+		empService.salvar(ep2);
+		empService.salvar(ep3);
+		empService.salvar(ep4);
+		
 		userService.salvar(user1);
 		
 		/*================== */	

@@ -10,42 +10,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.carpal.model.Ferramenta;
-import br.com.carpal.model.Usuario;
-import br.com.carpal.services.FerramentaService;
+import br.com.carpal.model.Locacao;
+import br.com.carpal.services.LocacaoService;
 
 @RestController
-@RequestMapping("/ferramentas")
-public class FerramentasController {
+@RequestMapping("/requisicoes")
+public class LocacaoController {
 
 	@Autowired
-	private FerramentaService service;
+	private LocacaoService service;
 
 	/* Endpoint - Listar Todos */
 	@GetMapping
-	public ResponseEntity<List<Ferramenta>> listarTodos() {
-		List<Ferramenta> list = service.findAll();
+	public ResponseEntity<List<Locacao>> listarTodos() {
+		List<Locacao> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping("/{id}")
-	public Ferramenta buscarPorId(@PathVariable Long id) {
+	public Locacao buscarPorId(@PathVariable Long id) {
 		return service.buscarPorID(id);
 	}
 
-	/* Buscar por descricao - como paramentro */
-	@GetMapping("/lista")
-	public ResponseEntity<List<Ferramenta>> findByName(@RequestParam(value = "descricao") String descricao) {
-		List<Ferramenta> list = service.buscarPorDescricao(descricao);
+	/* Buscar por nome - como paramentro
+	@GetMapping("/usuario")
+	public ResponseEntity<List<Locacao>> findByUsuario(@RequestParam(value = "nome") String nome) {
+		List<Locacao> list = service.findByUsuarios(nome);
 		return ResponseEntity.ok().body(list);
 	}
-
+	*/
+	
 	@PostMapping
-	public Ferramenta salvar(@RequestBody Ferramenta Ferramenta) {
-		return service.salvar(Ferramenta);
+	public Locacao salvar(@RequestBody Locacao locacao) {
+		return service.salvar(locacao);
 	}
 
 	@DeleteMapping("/{id}")
