@@ -44,8 +44,12 @@ public class Usuario implements Serializable {
 	private Empresa empresa;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "usuario")
+	@OneToMany(mappedBy = "usuarioRequerent")
 	private List<Locacao> locacaos = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "usuarioLogado")
+	private List<Locacao> locacaosLog = new ArrayList<>();
 
 	public Usuario() {
 
@@ -125,6 +129,10 @@ public class Usuario implements Serializable {
 
 	public void setLocacaos(List<Locacao> locacaos) {
 		this.locacaos = locacaos;
+	}
+
+	public List<Locacao> getLocacaosLog() {
+		return locacaosLog;
 	}
 
 	@Override

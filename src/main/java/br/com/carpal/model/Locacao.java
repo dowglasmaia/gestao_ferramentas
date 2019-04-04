@@ -2,16 +2,22 @@ package br.com.carpal.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.carpal.model.enums.Situacao;
 
 @Entity
 public class Locacao implements Serializable {
@@ -27,28 +33,32 @@ public class Locacao implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataHoraLocEnd;
 
-	@Column(length = 50, nullable = false)
-	@NotNull
-	private Integer qtdaLocada;
+	@Enumerated(EnumType.STRING)
+	private Situacao situacao;
+
+	@OneToMany(mappedBy = "locacao", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<LocacaoDetalhes> locacaoDetalhes = new HashSet<>();
 
 	@ManyToOne
-	private Usuario usuario;
+	private Usuario usuarioRequerent;
+
+	@ManyToOne
+	private Usuario usuarioLogado;
 
 	public Locacao() {
-
+		// TODO Auto-generated constructor stub
 	}
 
-	public Locacao(Long codigo, LocalDateTime dataHoraLocIn, LocalDateTime dataHoraLocEnd, @NotNull Integer qtdaLocada,
-			Usuario usuario) {
+	public Locacao(Long codigo, LocalDateTime dataHoraLocIn, LocalDateTime dataHoraLocEnd, Situacao situacao,
+			Usuario usuarioRequerent, Usuario usuarioLogado) {
 		super();
 		this.codigo = codigo;
 		this.dataHoraLocIn = dataHoraLocIn;
 		this.dataHoraLocEnd = dataHoraLocEnd;
-		this.qtdaLocada = qtdaLocada;
-		this.usuario = usuario;
+		this.situacao = situacao;
+		this.usuarioRequerent = usuarioRequerent;
+		this.usuarioLogado = usuarioLogado;
 	}
-
-
 
 	public Long getCodigo() {
 		return codigo;
@@ -74,20 +84,36 @@ public class Locacao implements Serializable {
 		this.dataHoraLocEnd = dataHoraLocEnd;
 	}
 
-	public Integer getQtdaLocada() {
-		return qtdaLocada;
+	public Situacao getSituacao() {
+		return situacao;
 	}
 
-	public void setQtdaLocada(Integer qtdaLocada) {
-		this.qtdaLocada = qtdaLocada;
+	public void setSituacao(Situacao situacao) {
+		this.situacao = situacao;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Set<LocacaoDetalhes> getLocacaoDetalhes() {
+		return locacaoDetalhes;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setLocacaoDetalhes(Set<LocacaoDetalhes> locacaoDetalhes) {
+		this.locacaoDetalhes = locacaoDetalhes;
+	}
+
+	public Usuario getUsuarioRequerent() {
+		return usuarioRequerent;
+	}
+
+	public void setUsuarioRequerent(Usuario usuarioRequerent) {
+		this.usuarioRequerent = usuarioRequerent;
+	}
+
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
+	}
+
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
 	}
 
 	@Override
@@ -114,7 +140,5 @@ public class Locacao implements Serializable {
 			return false;
 		return true;
 	}
-
-	
 
 }
