@@ -80,9 +80,12 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 		Empresa ep4 = new Empresa(null, 789, "Imtubiara", "012332123");
 
 		Usuario user1 = new Usuario(null, 320, "Maia", "012", "986", c1, ep1);
+		Usuario user2 = new Usuario(null, 320, "Maia", "012", "986", c1, ep1);
 		
 		c1.getUsuarios().add(user1);
+		c2.getUsuarios().add(user2);
 		ep1.getUsuarios().add(user1);
+		ep4.getUsuarios().add(user2);
 		
 		cargoService.salvar(c1);
 		cargoService.salvar(c2);		

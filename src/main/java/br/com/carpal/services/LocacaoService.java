@@ -18,20 +18,22 @@ public class LocacaoService {
 
 	@Autowired
 	private FerramentaService fmService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	/* Salvar nova Requisição com os Datalhes */
 	public Locacao salvar(Locacao obj) {
 		obj.setCodigo(null);
 		obj.setDataHoraLocIn(LocalDateTime.now());
-		obj.setSituacao(obj.getSituacao().A);
+		obj.setSituacao(obj.getSituacao().A);		
 
 		/* inserindo os detalhes  na Requisição de Locação*/
 		for (LocacaoDetalhes dt : obj.getLocacaoDetalhes()) {
 			dt.setFerramenta(fmService.buscarPorID(dt.getFerramenta().getCodigo()));
 			dt.setLocacao(obj);
-		}
+		}		
 		return repository.save(obj);
-
 	}
 
 	/* Listar Todos */
