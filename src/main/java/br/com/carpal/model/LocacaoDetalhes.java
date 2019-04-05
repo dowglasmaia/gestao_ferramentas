@@ -2,11 +2,8 @@ package br.com.carpal.model;
 
 import java.io.Serializable;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,37 +11,48 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class LocacaoDetalhes implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long codigo;
+	@JsonIgnore
+	@EmbeddedId
+	private LocDetalhesPK codigo = new LocDetalhesPK();
 
 	private Integer quantidade;
 
-	@ManyToOne
-	private Ferramenta ferramenta;
-
-	@JsonIgnore
-	@ManyToOne
-	private Locacao locacao;
-
 	public LocacaoDetalhes() {
-		
+
 	}
 
-	public LocacaoDetalhes(Long codigo, Integer quantidade, Ferramenta ferramenta, Locacao locacao) {
+	public LocacaoDetalhes(Locacao locacao, Ferramenta ferramenta, Integer quantidade) {
 		super();
-		this.codigo = codigo;
+		codigo.setLocacao(locacao);
+		codigo.setFerramenta(ferramenta);
 		this.quantidade = quantidade;
-		this.ferramenta = ferramenta;
-		this.locacao = locacao;
 	}
 
-	
-	public Long getCodigo() {
+	/* ==== acessoiando os detalhes da locação com suas referencias de clases==== */
+	@JsonIgnore
+	public Locacao getLocacao() {
+		return codigo.getLocacao();
+	}
+
+	public void setLocacao(Locacao locacao) {
+		codigo.setLocacao(locacao);
+	}
+
+	public Ferramenta getFerramenta() {
+		return codigo.getFerramenta();
+	}
+
+	public void setFerramenta(Ferramenta ferramenta) {
+		codigo.setFerramenta(ferramenta);
+	}
+
+	/* === / ====== */
+
+	public LocDetalhesPK getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(Long codigo) {
+	public void setCodigo(LocDetalhesPK codigo) {
 		this.codigo = codigo;
 	}
 
@@ -54,22 +62,6 @@ public class LocacaoDetalhes implements Serializable {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	public Ferramenta getFerramenta() {
-		return ferramenta;
-	}
-
-	public void setFerramenta(Ferramenta ferramenta) {
-		this.ferramenta = ferramenta;
-	}
-
-	public Locacao getLocacao() {
-		return locacao;
-	}
-
-	public void setLocacao(Locacao locacao) {
-		this.locacao = locacao;
 	}
 
 	@Override

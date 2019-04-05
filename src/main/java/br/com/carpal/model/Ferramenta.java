@@ -1,7 +1,9 @@
 package br.com.carpal.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+
+import org.aspectj.weaver.ast.Literal;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -56,9 +60,20 @@ public class Ferramenta implements Serializable {
 	private Fabricante fabricante;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "ferramenta", cascade = CascadeType.ALL)
-	private Set<LocacaoDetalhes> locacoes = new HashSet<>();
+	@OneToMany(mappedBy = "codigo.ferramenta")
+	private Set<LocacaoDetalhes> locacaoDetalhes = new HashSet<>();
 
+	
+	@JsonIgnore
+	public List<Locacao> getListLocacoes() {
+		List<Locacao> lista = new ArrayList<>();
+		for (LocacaoDetalhes x : locacaoDetalhes) {
+			lista.add(x.getLocacao());
+		}
+		return lista;
+	}
+
+	
 	public Ferramenta() {
 
 	}
@@ -149,8 +164,12 @@ public class Ferramenta implements Serializable {
 		this.fabricante = fabricante;
 	}
 
-	public Set<LocacaoDetalhes> getLocacoes() {
-		return locacoes;
+	public Set<LocacaoDetalhes> getLocacaoDetalhes() {
+		return locacaoDetalhes;
+	}
+
+	public void setLocacaoDetalhes(Set<LocacaoDetalhes> locacaoDetalhes) {
+		this.locacaoDetalhes = locacaoDetalhes;
 	}
 
 	@Override

@@ -40,17 +40,18 @@ public class Usuario implements Serializable {
 	@ManyToOne // Usuario tem um cargo
 	private Cargo cargo;
 
+	@JsonIgnore
 	@ManyToOne
 	private Empresa empresa;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuarioRequerent")
 	private List<Locacao> locacaos = new ArrayList<>();
-
+/*
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuarioLogado")
 	private List<Locacao> locacaosLog = new ArrayList<>();
-
+*/
 	public Usuario() {
 
 	}
@@ -130,11 +131,11 @@ public class Usuario implements Serializable {
 	public void setLocacaos(List<Locacao> locacaos) {
 		this.locacaos = locacaos;
 	}
-
+/*
 	public List<Locacao> getLocacaosLog() {
 		return locacaosLog;
 	}
-
+*/
 	@Override
 	public int hashCode() {
 		final int prime = 31;

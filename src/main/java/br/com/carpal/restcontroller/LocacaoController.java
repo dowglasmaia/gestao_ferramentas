@@ -42,6 +42,7 @@ public class LocacaoController {
 	}
 	*/
 	
+	/*Salvando a Localçao*/
 	@PostMapping
 	public Locacao salvar(@RequestBody Locacao locacao) {
 		return service.salvar(locacao);

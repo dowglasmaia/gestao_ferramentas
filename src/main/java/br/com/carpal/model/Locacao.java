@@ -36,28 +36,28 @@ public class Locacao implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
 
-	@OneToMany(mappedBy = "locacao", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "codigo.locacao", cascade= CascadeType.ALL)
 	private Set<LocacaoDetalhes> locacaoDetalhes = new HashSet<>();
 
 	@ManyToOne
 	private Usuario usuarioRequerent;
 
-	@ManyToOne
-	private Usuario usuarioLogado;
+	//@ManyToOne
+	//private Usuario usuarioLogado;
 
 	public Locacao() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Locacao(Long codigo, LocalDateTime dataHoraLocIn, LocalDateTime dataHoraLocEnd, Situacao situacao,
-			Usuario usuarioRequerent, Usuario usuarioLogado) {
+			Usuario usuarioRequerent) {
 		super();
 		this.codigo = codigo;
 		this.dataHoraLocIn = dataHoraLocIn;
 		this.dataHoraLocEnd = dataHoraLocEnd;
 		this.situacao = situacao;
 		this.usuarioRequerent = usuarioRequerent;
-		this.usuarioLogado = usuarioLogado;
+		
 	}
 
 	public Long getCodigo() {
@@ -107,7 +107,9 @@ public class Locacao implements Serializable {
 	public void setUsuarioRequerent(Usuario usuarioRequerent) {
 		this.usuarioRequerent = usuarioRequerent;
 	}
-
+	
+	
+/*
 	public Usuario getUsuarioLogado() {
 		return usuarioLogado;
 	}
@@ -115,7 +117,7 @@ public class Locacao implements Serializable {
 	public void setUsuarioLogado(Usuario usuarioLogado) {
 		this.usuarioLogado = usuarioLogado;
 	}
-
+*/
 	@Override
 	public int hashCode() {
 		final int prime = 31;
