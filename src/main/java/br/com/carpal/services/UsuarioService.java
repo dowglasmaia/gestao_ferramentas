@@ -3,24 +3,41 @@ package br.com.carpal.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.carpal.model.Cargo;
+import br.com.carpal.model.Empresa;
 import br.com.carpal.model.Usuario;
+import br.com.carpal.model.dto.UsuarioNewDTO;
 import br.com.carpal.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
 
 	@Autowired
+	BCryptPasswordEncoder pe;
+
+	@Autowired
 	private UsuarioRepository repository;
 
-	/* Salvar ou Atualiza*/
+	/* Salvar */
 	public Usuario salvar(Usuario obj) {
-		//if (obj.getCodigo() == null) {
-			return repository.save(obj);
-		//} else {
-		//	return repository.update(obj);
-		//}
+		return repository.save(obj);
+
+	}
+
+	/* Salvando o Funcionario e Suas Referencias */
+	public Usuario fromDTO(UsuarioNewDTO objDTO) {
+
+		Cargo cargo = objDTO.getCargo();
+		Empresa empresa = objDTO.getEmpresa();
+
+		Usuario usuario = new Usuario(null, objDTO.getMatricula(), objDTO.getNome(), objDTO.getCpf(),
+				pe.encode(objDTO.getSenha()), objDTO.getContato(), cargo, empresa);
+
+		return usuario;
+
 	}
 
 	/* Listar Todos */

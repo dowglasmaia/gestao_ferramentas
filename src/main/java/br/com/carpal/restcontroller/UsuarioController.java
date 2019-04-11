@@ -1,6 +1,9 @@
 package br.com.carpal.restcontroller;
 
+import java.net.URI;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.carpal.model.Cargo;
 import br.com.carpal.model.Usuario;
+import br.com.carpal.model.dto.UsuarioNewDTO;
 import br.com.carpal.services.UsuarioService;
 
 @RestController
@@ -36,16 +40,21 @@ public class UsuarioController {
 		return service.buscarPorID(id);
 	}
 
-	/* Buscar por nome - como paramentro*/
+	/* Buscar por nome - como paramentro */
 	@GetMapping("/name")
 	public ResponseEntity<List<Usuario>> findByName(@RequestParam(value = "nome") String nome) {
 		List<Usuario> list = service.buscarPorNome(nome);
 		return ResponseEntity.ok().body(list);
 	}
-	
+
+	/* Salvar */
 	@PostMapping
-	public Usuario salvar(@RequestBody Usuario usuario) {
-		return service.salvar(usuario);
+	public ResponseEntity<Void> save(@Valid @RequestBody UsuarioNewDTO objDTO) {
+		Usuario obj = service.fromDTO(objDTO);
+		service.salvar(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}").buildAndExpand(obj.getCodigo())
+				.toUri();
+		return ResponseEntity.created(uri).build();
 	}
 
 	@DeleteMapping("/{id}")

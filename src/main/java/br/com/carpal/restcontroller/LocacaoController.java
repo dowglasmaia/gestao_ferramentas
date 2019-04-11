@@ -30,19 +30,20 @@ public class LocacaoController {
 	}
 
 	@GetMapping("/{id}")
-	public Locacao buscarPorId(@PathVariable Long id) {
-		return service.buscarPorID(id);
+	public ResponseEntity<Locacao> buscarPorId(@PathVariable Long id) {
+		Locacao obj = service.buscarPorID(id);
+		return ResponseEntity.ok().body(obj);
 	}
 
-	/* Buscar por nome - como paramentro
-	@GetMapping("/usuario")
-	public ResponseEntity<List<Locacao>> findByUsuario(@RequestParam(value = "nome") String nome) {
-		List<Locacao> list = service.findByUsuarios(nome);
-		return ResponseEntity.ok().body(list);
-	}
-	*/
-	
-	/*Salvando a Localçao*/
+	/*
+	 * Buscar por nome - como paramentro
+	 * 
+	 * @GetMapping("/usuario") public ResponseEntity<List<Locacao>>
+	 * findByUsuario(@RequestParam(value = "nome") String nome) { List<Locacao> list
+	 * = service.findByUsuarios(nome); return ResponseEntity.ok().body(list); }
+	 */
+
+	/* Salvando a Localçao */
 	@PostMapping
 	public Locacao salvar(@RequestBody Locacao locacao) {
 		return service.salvar(locacao);
