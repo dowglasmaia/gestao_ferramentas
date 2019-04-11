@@ -2,10 +2,17 @@ package br.com.carpal.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,14 +21,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.carpal.model.enums.Perfil;
 
 @Entity
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +42,9 @@ public class Usuario implements Serializable {
 	private String nome;
 
 	/* Usar o CPF como Login */
-	@Column(length = 16, nullable = false)
-	@NotEmpty
+	@Column(length = 15, nullable = false, unique=true)
+	@NotEmpty(message= "Campo CPF Obrigatórido")
+	@CPF(message = "CPF Ínvalido")
 	private String cpf;
 
 	/* Senha */
@@ -43,6 +52,10 @@ public class Usuario implements Serializable {
 	@Column(length = 100, nullable = false)
 	@NotEmpty
 	private String senha;
+
+	@ElementCollection(fetch = FetchType.EAGER) // garante que quando buscar o usuario no BD, Carregue tbm seus Perfis.
+	@CollectionTable(name = "PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
 
 	// Não é Gravado no banco de Dados
 	@Transient
@@ -70,6 +83,7 @@ public class Usuario implements Serializable {
 	 * new ArrayList<>();
 	 */
 	public Usuario() {
+		addPerfil(Perfil.USUARIO); //Definindo Perfil Padrão para Todos os usuario Cadastrados
 
 	}
 
@@ -84,6 +98,17 @@ public class Usuario implements Serializable {
 		this.cargo = cargo;
 		this.empresa = empresa;
 		this.senha = senha;
+		addPerfil(Perfil.USUARIO); //Definindo Perfil Padrão para Todos os usuario Cadastrados
+	}
+
+	// Retorna os Perfis dos Clientes do Enum Perfil
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+
+	/* Add Perfil */
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 
 	public Long getCodigo() {
@@ -125,7 +150,6 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
 
 	public String getToken() {
 		return token;

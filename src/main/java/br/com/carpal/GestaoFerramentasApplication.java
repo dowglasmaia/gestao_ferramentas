@@ -16,6 +16,7 @@ import br.com.carpal.model.Ferramenta;
 import br.com.carpal.model.Locacao;
 import br.com.carpal.model.LocacaoDetalhes;
 import br.com.carpal.model.Usuario;
+import br.com.carpal.model.enums.Perfil;
 import br.com.carpal.model.enums.Situacao;
 import br.com.carpal.repository.LocacaoDetalhesRepository;
 import br.com.carpal.repository.LocacaoRepository;
@@ -80,9 +81,11 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 		Empresa ep3 = new Empresa(null, 001, "Anapolis", "012332123");
 		Empresa ep4 = new Empresa(null, 789, "Imtubiara", "012332123");
 
-		Usuario user1 = new Usuario(null, 320, "Maia", "012", pe.encode("abc"), "986", c1, ep1);
-		Usuario user2 = new Usuario(null, 320, "Dowglas Maia Dev", "0147", pe.encode("abc"), "986", c1, ep1);
-
+		Usuario user1 = new Usuario(null, 320, "Maia", "980.932.630-04", pe.encode("abc"), "986", c1, ep1);
+		
+		Usuario user2 = new Usuario(null, 320, "Dowglas Maia", "500.522.150-67", pe.encode("abc"), "986", c1, ep1);
+		user2.addPerfil(Perfil.ADMIN); // Usuario Administrador
+		
 		c1.getUsuarios().add(user1);
 		c2.getUsuarios().add(user2);
 		ep1.getUsuarios().add(user1);
