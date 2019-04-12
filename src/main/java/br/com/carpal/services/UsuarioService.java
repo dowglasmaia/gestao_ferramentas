@@ -54,6 +54,11 @@ public class UsuarioService {
 	public List<Usuario> buscarPorNome(String nome) {
 		return repository.findByNome(nome);
 	}
+	
+	/* Buscar por CPF */
+	public List<Usuario> buscarPorCpf(String cpf) {
+		return repository.findByCpf(cpf);
+	}
 
 	/* Delete */
 	public void remove(Long id) {

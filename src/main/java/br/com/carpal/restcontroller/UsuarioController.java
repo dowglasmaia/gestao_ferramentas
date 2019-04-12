@@ -47,6 +47,13 @@ public class UsuarioController {
 		return ResponseEntity.ok().body(list);
 	}
 
+	/* Buscar por cpf - como paramentro */
+	@GetMapping("/cpf")
+	public ResponseEntity<List<Usuario>> findByCpf(@RequestParam(value = "cpf") String cpf) {
+		List<Usuario> list = service.buscarPorCpf(cpf);
+		return ResponseEntity.ok().body(list);
+	}
+
 	/* Salvar */
 	@PostMapping
 	public ResponseEntity<Void> save(@Valid @RequestBody UsuarioNewDTO objDTO) {
