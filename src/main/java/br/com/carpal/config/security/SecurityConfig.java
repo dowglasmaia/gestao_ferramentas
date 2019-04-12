@@ -36,9 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
 
-	private static final String[] PUBLIC_MATCHERS_GET = { "/**" };
+	//private static final String[] PUBLIC_MATCHERS_GET = { "/usuarios" };
 
-	private static final String[] PUBLIC_MATCHERS_POST = { "/**" };
+	private static final String[] PUBLIC_MATCHERS_POST = { "/login" };
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -49,12 +49,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+				//.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 				.antMatchers(PUBLIC_MATCHERS) 
 				.permitAll()  
 				.anyRequest().authenticated();  
 		
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil)); // Registrando o JWTAuthenticationFilter na conf do sp Securyti
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService)); //Reg. o filtro de autorização
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); 
 	}
 
@@ -69,11 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS")); // Liberando o Curs
-																									// de Forma
-																									// esplicita para os
-																									// Metdos HTTP da
-																									// lista,
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS")); 
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
