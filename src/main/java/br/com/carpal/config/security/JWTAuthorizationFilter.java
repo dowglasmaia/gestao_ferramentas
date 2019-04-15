@@ -49,18 +49,17 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}
 		}
-		
 		chain.doFilter(request, response);
 
 	}
 
-	/*metodo auxilar para verificação to token enviado.*/
+	/* metodo auxilar para verificação to token enviado. */
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
-		 if(jwtUtil.tokenValido(token)) {
-			 	String username = jwtUtil.getUsername(token);
-			 	UserDetails user = userDetailsService.loadUserByUsername(username);
-			 	return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-		 }
+		if (jwtUtil.tokenValido(token)) {
+			String username = jwtUtil.getUsername(token);
+			UserDetails user = userDetailsService.loadUserByUsername(username);
+			return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+		}
 		return null;
 	}
 

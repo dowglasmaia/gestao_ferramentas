@@ -30,11 +30,12 @@ public class JWTUtil {
 
 	/*Verificando se o token é valido*/
 	public boolean tokenValido(String token) {
+		/*claims - armazena as os Dadsos do token*/
 		Claims claims = getClaims(token);
 		if(claims != null) {
-			String username = claims.getSubject();
-			Date experouDate = claims.getExpiration();
-			Date agora = new Date(System.currentTimeMillis());
+			String username = claims.getSubject(); //usuario do token
+			Date experouDate = claims.getExpiration(); // tempo de expiração
+			Date agora = new Date(System.currentTimeMillis()); // data Atual
 				if(username != null && experouDate != null && agora.before(experouDate)) {
 					return true;
 				}
@@ -43,7 +44,7 @@ public class JWTUtil {
 	}
 
 	
-	/*obtendo os Claims atraves do token*/
+	/*Mtdo Aux. para verificar se o tokem e Valido - obtendo os Claims atraves do token*/
 	private Claims getClaims(String token) {	
 		try {
 			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
