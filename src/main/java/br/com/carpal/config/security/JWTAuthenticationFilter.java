@@ -62,7 +62,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String token = jwtUtil.generateToken(cpf);
 		res.addHeader("Authorization", "Bearer " + token);
 		
-		res.addHeader("access-control-expose-headers", "Authorization"); // libera a Leitura do Authorization por CORS
+		res.addHeader("access-control-expose-headers", "Authorization"); // libera a Leitura do cabeçalho personalizado Authorization por CORS
 		
 	}
 

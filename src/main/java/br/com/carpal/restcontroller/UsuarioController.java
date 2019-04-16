@@ -56,6 +56,7 @@ public class UsuarioController {
 	}
 
 	/* Salvar */
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Void> save(@Valid @RequestBody UsuarioNewDTO objDTO) {
 		Usuario obj = service.fromDTO(objDTO);

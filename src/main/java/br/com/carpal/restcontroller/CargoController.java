@@ -43,7 +43,7 @@ public class CargoController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN')") // SOMENTE Admin pode Excluir
+	@PreAuthorize("hasAnyRole('ADMIN')") 
 	@PostMapping
 	public Cargo salvar(@RequestBody Cargo cargo) {
 		return service.salvar(cargo);

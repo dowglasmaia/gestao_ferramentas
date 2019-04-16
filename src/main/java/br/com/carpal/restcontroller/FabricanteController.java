@@ -42,6 +42,8 @@ public class FabricanteController {
 		List<Fabricante> list = service.buscarPorNome(nome);
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public Fabricante salvar(@RequestBody Fabricante obj) {
 		return service.salvar(obj);

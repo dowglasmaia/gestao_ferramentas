@@ -45,6 +45,7 @@ public class LocacaoController {
 	 */
 
 	/* Salvando a Localçao */
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public Locacao salvar(@RequestBody Locacao locacao) {
 		return service.salvar(locacao);

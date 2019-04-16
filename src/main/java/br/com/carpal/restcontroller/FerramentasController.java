@@ -44,6 +44,7 @@ public class FerramentasController {
 		return ResponseEntity.ok().body(list);
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public Ferramenta salvar(@RequestBody Ferramenta Ferramenta) {
 		return service.salvar(Ferramenta);

@@ -43,6 +43,7 @@ public class EmpresaController {
 		return ResponseEntity.ok().body(list);
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public Empresa salvar(@RequestBody Empresa empresa) {
 		return service.salvar(empresa);
