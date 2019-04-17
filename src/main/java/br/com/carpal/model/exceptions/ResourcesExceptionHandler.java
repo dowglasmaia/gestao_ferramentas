@@ -22,6 +22,7 @@ public class ResourcesExceptionHandler {
 	// Exceção para Objetos Não Encontrados
 		@ExceptionHandler(ObjectNotFoundException.class)
 		public ResponseEntity<StandardError> objNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+			
 			StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
 					"Não encontrado", e.getMessage(), request.getRequestURI());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
@@ -30,12 +31,13 @@ public class ResourcesExceptionHandler {
 		// Exceção para Dados Não Encontrados
 		@ExceptionHandler(DataIntegrityException.class)
 		public ResponseEntity<StandardError> dataIntegreity(DataIntegrityException e, HttpServletRequest request) {
+			
 			StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
 					"Integridade de Dados", e.getMessage(), request.getRequestURI());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 		}
 
-		// Exceção Personaliza para Validação de Dados - com o error 422
+		// Exceção Personaliza para Validação de Dados(Formularios) - com o error 422 
 		@ExceptionHandler(MethodArgumentNotValidException.class)
 		public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 
@@ -50,6 +52,7 @@ public class ResourcesExceptionHandler {
 		// Exceção para Objetos Não Autorizados!!!
 		@ExceptionHandler(AuthorizationException.class)
 		public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
+			
 			StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso Negado",
 					e.getMessage(), request.getRequestURI());
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
@@ -58,7 +61,8 @@ public class ResourcesExceptionHandler {
 		// Exceção para FileException!!!
 	@ExceptionHandler(FileException.class)
 		public ResponseEntity<StandardError> file(FileException e, HttpServletRequest request) {
-			StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+			
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
 					"Erro de Aquivo", e.getMessage(), request.getRequestURI());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 		}

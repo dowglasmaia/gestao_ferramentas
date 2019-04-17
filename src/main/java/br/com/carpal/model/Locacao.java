@@ -36,28 +36,28 @@ public class Locacao implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
 
-	@OneToMany(mappedBy = "codigo.locacao", cascade= CascadeType.ALL)
+	@OneToMany(mappedBy = "codigo.locacao", cascade = CascadeType.ALL)
 	private Set<LocacaoDetalhes> locacaoDetalhes = new HashSet<>();
 
 	@ManyToOne
-	private Usuario usuarioRequerent;
+	private Funcionario funcionario;
 
-	//@ManyToOne
-	//private Usuario usuarioLogado;
+	// @ManyToOne
+	// private Usuario usuarioLogado;
 
 	public Locacao() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Locacao(Long codigo, LocalDateTime dataHoraLocIn, LocalDateTime dataHoraLocEnd, Situacao situacao,
-			Usuario usuarioRequerent) {
+			Funcionario funcionario) {
 		super();
 		this.codigo = codigo;
 		this.dataHoraLocIn = dataHoraLocIn;
 		this.dataHoraLocEnd = dataHoraLocEnd;
 		this.situacao = situacao;
-		this.usuarioRequerent = usuarioRequerent;
-		
+		this.funcionario = funcionario;
+
 	}
 
 	public Long getCodigo() {
@@ -100,24 +100,14 @@ public class Locacao implements Serializable {
 		this.locacaoDetalhes = locacaoDetalhes;
 	}
 
-	public Usuario getUsuarioRequerent() {
-		return usuarioRequerent;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	public void setUsuarioRequerent(Usuario usuarioRequerent) {
-		this.usuarioRequerent = usuarioRequerent;
-	}
-	
-	
-/*
-	public Usuario getUsuarioLogado() {
-		return usuarioLogado;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
-	public void setUsuarioLogado(Usuario usuarioLogado) {
-		this.usuarioLogado = usuarioLogado;
-	}
-*/
 	@Override
 	public int hashCode() {
 		final int prime = 31;

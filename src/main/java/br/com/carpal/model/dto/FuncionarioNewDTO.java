@@ -5,7 +5,7 @@ import java.io.Serializable;
 import br.com.carpal.model.Cargo;
 import br.com.carpal.model.Empresa;
 
-public class UsuarioNewDTO implements Serializable {
+public class FuncionarioNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long codigo;
@@ -16,12 +16,6 @@ public class UsuarioNewDTO implements Serializable {
 
 	private String cpf;
 
-	private String senha;
-
-	private String login;
-
-	private String token;
-
 	private String contato;
 
 	private Cargo cargo;
@@ -29,7 +23,7 @@ public class UsuarioNewDTO implements Serializable {
 	private Empresa empresa;
 
 	// TODO Auto-generated constructor stub
-	public UsuarioNewDTO() {
+	public FuncionarioNewDTO() {
 
 	}
 
@@ -63,30 +57,6 @@ public class UsuarioNewDTO implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
 	}
 
 	public String getContato() {

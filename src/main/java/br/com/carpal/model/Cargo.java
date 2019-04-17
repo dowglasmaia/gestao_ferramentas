@@ -30,6 +30,10 @@ public class Cargo implements Serializable {
 	@OneToMany(mappedBy = "cargo")
 	private List<Usuario> usuarios = new ArrayList<>();
 
+	@JsonIgnore
+	@OneToMany(mappedBy = "cargo")
+	private List<Funcionario> funcionario = new ArrayList<>();
+
 	public Cargo() {
 
 	}
@@ -62,6 +66,10 @@ public class Cargo implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Funcionario> getFuncionario() {
+		return funcionario;
 	}
 
 	@Override

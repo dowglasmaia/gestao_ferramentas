@@ -34,7 +34,7 @@ public class UsuarioService {
 		Empresa empresa = objDTO.getEmpresa();
 
 		Usuario usuario = new Usuario(null, objDTO.getMatricula(), objDTO.getNome(), objDTO.getCpf(),
-				pe.encode(objDTO.getSenha()), objDTO.getContato(), cargo, empresa);
+				objDTO.getContato(), cargo, empresa, pe.encode(objDTO.getSenha()));
 
 		return usuario;
 
@@ -53,11 +53,6 @@ public class UsuarioService {
 	/* Buscar por nome */
 	public List<Usuario> buscarPorNome(String nome) {
 		return repository.findByNome(nome);
-	}
-	
-	/* Buscar por CPF */
-	public List<Usuario> buscarPorCpf(String cpf) {
-		return repository.findByCpf(cpf);
 	}
 
 	/* Delete */

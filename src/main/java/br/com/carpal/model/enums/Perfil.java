@@ -2,7 +2,8 @@ package br.com.carpal.model.enums;
 
 public enum Perfil {
 	ADMIN(1, "ROLE_ADMIN"),
-	USUARIO(2, "ROLE_USUARIO");
+	USUARIO(2, "ROLE_USUARIO"),
+	SUPERVISOR(3, "ROLE_SUPERVISOR");
 
 	private int cod;
 	private String descricao;

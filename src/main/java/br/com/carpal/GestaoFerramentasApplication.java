@@ -13,17 +13,20 @@ import br.com.carpal.model.Cargo;
 import br.com.carpal.model.Empresa;
 import br.com.carpal.model.Fabricante;
 import br.com.carpal.model.Ferramenta;
+import br.com.carpal.model.Funcionario;
 import br.com.carpal.model.Locacao;
 import br.com.carpal.model.LocacaoDetalhes;
 import br.com.carpal.model.Usuario;
 import br.com.carpal.model.enums.Perfil;
 import br.com.carpal.model.enums.Situacao;
+import br.com.carpal.repository.FuncionarioRepository;
 import br.com.carpal.repository.LocacaoDetalhesRepository;
 import br.com.carpal.repository.LocacaoRepository;
 import br.com.carpal.services.CargoService;
 import br.com.carpal.services.EmpresaService;
 import br.com.carpal.services.FabricanteService;
 import br.com.carpal.services.FerramentaService;
+import br.com.carpal.services.FuncionarioService;
 import br.com.carpal.services.UsuarioService;
 
 @SpringBootApplication
@@ -43,6 +46,9 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 
 	@Autowired
 	private UsuarioService userService;
+
+	@Autowired
+	private FuncionarioService funcService;
 
 	@Autowired
 	private EmpresaService empService;
@@ -81,27 +87,38 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 		Empresa ep3 = new Empresa(null, 001, "Anapolis", "012332123");
 		Empresa ep4 = new Empresa(null, 789, "Imtubiara", "012332123");
 
-		Usuario user1 = new Usuario(null, 320, "Maia", "98093263004", pe.encode("abcd"), "986", c1, ep1);
-		
-		Usuario user2 = new Usuario(null, 320, "Dowglas Maia", "500.522.150-67", pe.encode("abc"), "986", c1, ep1);
+		Funcionario fun1 = new Funcionario(null, 350, "Kayron Maia", "08277376022", "01-0000-0001", c1, ep2);
+
+		Usuario user1 = new Usuario(null, 789, "Maia", "17288281043", "011-0320-0000", c1, ep1, pe.encode("123"));
+
+		Usuario user2 = new Usuario(null, 001, "Dowglas Maia", "66223596014", "011-0320-0000", c2, ep1,
+				pe.encode("123"));
 		user2.addPerfil(Perfil.ADMIN); // Usuario Administrador
-		
+
 		c1.getUsuarios().add(user1);
 		c2.getUsuarios().add(user2);
+
+		c1.getFuncionario().add(fun1);
+
 		ep1.getUsuarios().add(user1);
 		ep4.getUsuarios().add(user2);
 
+		ep1.getFuncionario().add(fun1);
+
 		cargoService.salvar(c1);
 		cargoService.salvar(c2);
+
 		empService.salvar(ep1);
 		empService.salvar(ep2);
 		empService.salvar(ep3);
 		empService.salvar(ep4);
 
+		funcService.salvar(fun1);
+
 		userService.salvar(user1);
 		userService.salvar(user2);
 
-		Locacao lc1 = new Locacao(null, LocalDateTime.now(), null, Situacao.A, user1);
+		Locacao lc1 = new Locacao(null, LocalDateTime.now(), null, Situacao.A, fun1);
 		LocRepository.save(lc1);
 
 		LocacaoDetalhes dt1 = new LocacaoDetalhes(lc1, fm1, 10);

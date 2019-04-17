@@ -18,41 +18,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.carpal.model.Usuario;
-import br.com.carpal.model.dto.UsuarioNewDTO;
-import br.com.carpal.services.UsuarioService;
+import br.com.carpal.model.Funcionario;
+import br.com.carpal.model.dto.FuncionarioNewDTO;
+import br.com.carpal.services.FuncionarioService;
 
 @RestController
-@RequestMapping("/usuarios")
-public class UsuarioController {
+@RequestMapping("/funcionarios")
+public class FuncionarioController {
 
 	@Autowired
-	private UsuarioService service;
+	private FuncionarioService service;
 
 	/* Endpoint - Listar Todos */
 	@GetMapping
-	public ResponseEntity<List<Usuario>> listarTodos() {
-		List<Usuario> list = service.findAll();
+	public ResponseEntity<List<Funcionario>> listarTodos() {
+		List<Funcionario> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
 	@GetMapping("/{id}")
-	public Usuario buscarPorId(@PathVariable Long id) {
+	public Funcionario buscarPorId(@PathVariable Long id) {
 		return service.buscarPorID(id);
 	}
 
 	/* Buscar por nome - como paramentro */
 	@GetMapping("/name")
-	public ResponseEntity<List<Usuario>> findByName(@RequestParam(value = "nome") String nome) {
-		List<Usuario> list = service.buscarPorNome(nome);
+	public ResponseEntity<List<Funcionario>> findByName(@RequestParam(value = "nome") String nome) {
+		List<Funcionario> list = service.buscarPorNome(nome);
 		return ResponseEntity.ok().body(list);
 	}
+
 
 	/* Salvar */
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
-	public ResponseEntity<Void> save(@Valid @RequestBody UsuarioNewDTO objDTO) {
-		Usuario obj = service.fromDTO(objDTO);
+	public ResponseEntity<Void> save(@Valid @RequestBody FuncionarioNewDTO objDTO) {
+		Funcionario obj = service.fromDTO(objDTO);
 		service.salvar(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codigo}").buildAndExpand(obj.getCodigo())
 				.toUri();
