@@ -48,6 +48,13 @@ public class UsuarioController {
 		return ResponseEntity.ok().body(list);
 	}
 
+	/* Buscar por nome - como paramentro */
+	@GetMapping("/cpf")
+	public ResponseEntity<Usuario> findByCpf(@RequestParam(value = "cpf") String cpf) {
+		Usuario user = service.findByCpf(cpf);
+		return ResponseEntity.ok().body(user);
+	}
+
 	/* Salvar */
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping

@@ -11,6 +11,8 @@ import br.com.carpal.model.Empresa;
 import br.com.carpal.model.Usuario;
 import br.com.carpal.model.dto.UsuarioNewDTO;
 import br.com.carpal.repository.UsuarioRepository;
+import br.com.carpal.repository.datajpa.UsuarioRepoJPA;
+import br.com.carpal.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -20,6 +22,9 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
+
+	@Autowired
+	private UsuarioRepoJPA repoJPA;
 
 	/* Salvar */
 	public Usuario salvar(Usuario obj) {
@@ -53,6 +58,24 @@ public class UsuarioService {
 	/* Buscar por nome */
 	public List<Usuario> buscarPorNome(String nome) {
 		return repository.findByNome(nome);
+	}
+
+	/* Buscar por CPF */
+	public List<Usuario> buscarPorCpf(String cpf) {
+		List<Usuario> user = repository.findByCpf(cpf);
+		try {
+			if (user != null) {
+				return user;
+			}
+		} catch (RuntimeException e) {
+			throw new ObjectNotFoundException("Usuario Não Encontrado", e);
+		}
+		return null;
+	}
+
+	/* Find By Cpf */
+	public Usuario findByCpf(String cpf) {
+		return repoJPA.findByCpf(cpf);
 	}
 
 	/* Delete */
