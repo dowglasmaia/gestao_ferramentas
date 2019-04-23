@@ -66,17 +66,17 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		/* ================== Testando ================== ==================
+		/* ================== Testando ================== ================== */
 
 		Fabricante f1 = new Fabricante(null, "CNH", "www.cnh.com.br");
 		fabricanteService.salvar(f1);
 
-		Ferramenta fm1 = new Ferramenta(null, "NM Test01", "tes01", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
+		Ferramenta fm1 = new Ferramenta(null, "NM Parafusos", "montador", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
 		fmService.salvar(fm1);
-		Ferramenta fm2 = new Ferramenta(null, "Martelo cabeça", "tes02", 600, "Usar para Remover Teto", 10, 50, 50.0,
+		Ferramenta fm2 = new Ferramenta(null, "Martelo cabeça", "Prego", 600, "Usar para Remover Teto", 10, 50, 50.0,
 				f1);
 		fmService.salvar(fm2);
-		Ferramenta fm3 = new Ferramenta(null, "NM Test03", "tes03", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
+		Ferramenta fm3 = new Ferramenta(null, "NM Test03", "Chave de Trator", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
 		fmService.salvar(fm3);
 
 		Cargo c1 = new Cargo(null, "Assessor de TI");
@@ -131,7 +131,7 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 
 		LocDetalhes.save(dt1);
 		LocDetalhes.save(dt2);
- */
+
 	}
 
 }
