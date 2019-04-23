@@ -18,53 +18,53 @@ import br.com.carpal.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
 public class ResourcesExceptionHandler {
-	
+
 	// Exceção para Objetos Não Encontrados
-		@ExceptionHandler(ObjectNotFoundException.class)
-		public ResponseEntity<StandardError> objNotFound(ObjectNotFoundException e, HttpServletRequest request) {
-			
-			StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
-					"Não encontrado", e.getMessage(), request.getRequestURI());
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
-		}
+	@ExceptionHandler(ObjectNotFoundException.class)
+	public ResponseEntity<StandardError> objNotFound(ObjectNotFoundException e, HttpServletRequest request) {
 
-		// Exceção para Dados Não Encontrados
-		@ExceptionHandler(DataIntegrityException.class)
-		public ResponseEntity<StandardError> dataIntegreity(DataIntegrityException e, HttpServletRequest request) {
-			
-			StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
-					"Integridade de Dados", e.getMessage(), request.getRequestURI());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
-		}
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
+				"Não encontrado", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
 
-		// Exceção Personaliza para Validação de Dados(Formularios) - com o error 422 
-		@ExceptionHandler(MethodArgumentNotValidException.class)
-		public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+	// Exceção para Dados Não Encontrados
+	@ExceptionHandler(DataIntegrityException.class)
+	public ResponseEntity<StandardError> dataIntegreity(DataIntegrityException e, HttpServletRequest request) {
 
-			ValidationError err = new ValidationError(System.currentTimeMillis(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
-					"Erro de Validação", e.getMessage(), request.getRequestURI());
-			for (FieldError x : e.getBindingResult().getFieldErrors()) {
-				err.addError(x.getField(), x.getDefaultMessage());
-			}
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
-		}
-
-		// Exceção para Objetos Não Autorizados!!!
-		@ExceptionHandler(AuthorizationException.class)
-		public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
-			
-			StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso Negado",
-					e.getMessage(), request.getRequestURI());
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
-		}
-
-		// Exceção para FileException!!!
-	@ExceptionHandler(FileException.class)
-		public ResponseEntity<StandardError> file(FileException e, HttpServletRequest request) {
-			
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
-					"Erro de Aquivo", e.getMessage(), request.getRequestURI());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+				"Integridade de Dados", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+
+	// Exceção Personaliza para Validação de Dados(Formularios) - com o error 422
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+
+		ValidationError err = new ValidationError(System.currentTimeMillis(), HttpStatus.UNPROCESSABLE_ENTITY.value(),
+				"Erro de Validação", e.getMessage(), request.getRequestURI());
+		for (FieldError x : e.getBindingResult().getFieldErrors()) {
+			err.addError(x.getField(), x.getDefaultMessage());
 		}
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
+	}
+
+	// Exceção para Objetos Não Autorizados!!!
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso Negado",
+				e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+	}
+
+	// Exceção para FileException!!!
+	@ExceptionHandler(FileException.class)
+	public ResponseEntity<StandardError> file(FileException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"Erro de Aquivo", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
 
 }

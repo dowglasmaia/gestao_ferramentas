@@ -1,14 +1,29 @@
 package br.com.carpal.services;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import br.com.carpal.model.Locacao;
 import br.com.carpal.model.LocacaoDetalhes;
 import br.com.carpal.repository.LocacaoRepository;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 
 @Service
 public class LocacaoService {
@@ -18,21 +33,25 @@ public class LocacaoService {
 
 	@Autowired
 	private FerramentaService fmService;
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
+
+	/* conexão para relatorio */
+	@Autowired
+	private EntityManager entityManager;
 
 	/* Salvar nova Requisição com os Datalhes */
 	public Locacao salvar(Locacao obj) {
 		obj.setCodigo(null);
 		obj.setDataHoraLocIn(LocalDateTime.now());
-		obj.setSituacao(obj.getSituacao().A);		
+		obj.setSituacao(obj.getSituacao().A);
 
-		/* inserindo os detalhes  na Requisição de Locação*/
+		/* inserindo os detalhes na Requisição de Locação */
 		for (LocacaoDetalhes dt : obj.getLocacaoDetalhes()) {
 			dt.setFerramenta(fmService.buscarPorID(dt.getFerramenta().getCodigo()));
 			dt.setLocacao(obj);
-		}		
+		}
 		return repository.save(obj);
 	}
 
@@ -58,6 +77,38 @@ public class LocacaoService {
 		obj.setCodigo(id);
 		repository.delete(id);
 
+	}
+
+	/* Relatorio de Requisição - Jasper */
+	public InputStream relatorio() throws Exception {
+
+		/* Definindo o Nome do arquivo */
+		File relatorio = File.createTempFile("requisicao", "pdf");
+		
+		/*instanciando um Session apartin de Uma EntityManager*/
+		Session session = (Session) entityManager.getDelegate();
+		session.doWork(new Work() {
+
+			@Override
+			public void execute(Connection connection) throws SQLException {
+				try {
+
+					/* Arquivo Jasper - Gerado */
+					File jasper = ResourceUtils.getFile("classpath:relatorios/requisicao.jasper");
+
+					/* Gerando o Relatorio */
+					JasperPrint print = JasperFillManager.fillReport(jasper.getAbsolutePath(), null, connection);
+
+					/* Exportando para PDF */
+					JasperExportManager.exportReportToPdfFile(print, relatorio.getAbsolutePath());
+
+				} catch (JRException | FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		return new FileInputStream(relatorio);
 	}
 
 }

@@ -2,6 +2,9 @@ package br.com.carpal.restcontroller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.carpal.model.Locacao;
 import br.com.carpal.services.LocacaoService;
+import br.com.carpal.services.exceptions.FileException;
 
 @RestController
 @RequestMapping("/requisicoes")
@@ -55,6 +59,22 @@ public class LocacaoController {
 	@DeleteMapping("/{id}")
 	public void excluir(@PathVariable Long id) {
 		service.remove(id);
+	}
+
+	/* Endpoint - Relatorio */
+	@GetMapping("/relatorio")
+	public void findRelatorio(HttpServletResponse response) {
+		try {
+			IOUtils.copy(service.relatorio(), response.getOutputStream());
+			
+			//Setando o Tipo de arquivo para a Aplicação Cliente(Navegador"
+			response.setContentType("application/pdf");
+			
+			//enviando os Dados na Resposta da requisição
+			response.flushBuffer();			
+		} catch (Exception e) {
+			throw new FileException(e.getMessage());
+		}
 	}
 
 }

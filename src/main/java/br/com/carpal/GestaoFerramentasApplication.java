@@ -66,7 +66,7 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		/* ================== Testando ================== ================== */
+		/* ================== Testando ================== ==================
 
 		Fabricante f1 = new Fabricante(null, "CNH", "www.cnh.com.br");
 		fabricanteService.salvar(f1);
@@ -131,7 +131,7 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 
 		LocDetalhes.save(dt1);
 		LocDetalhes.save(dt2);
-
+ */
 	}
 
 }
