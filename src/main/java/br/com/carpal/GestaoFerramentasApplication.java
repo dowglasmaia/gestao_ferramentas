@@ -89,9 +89,9 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 
 		Funcionario fun1 = new Funcionario(null, 350, "Kayron Maia", "08277376022", "01-0000-0001", c1, ep2);
 
-		Usuario user1 = new Usuario(null, 789, "Maia", "17288281043", "011-0320-0000", c1, ep1, pe.encode("123"));
+		Usuario user1 = new Usuario(null, 789, "Kayron Maia", "17288281043", "011-0320-0000", c1, ep1, pe.encode("123"));
 
-		Usuario user2 = new Usuario(null, 001, "Dowglas Maia", "66223596014", "011-0320-0000", c2, ep1,
+		Usuario user2 = new Usuario(null, 001, "Dowglas Maia", "00668963395", "011-0320-0000", c2, ep1,
 				pe.encode("123"));
 		user2.addPerfil(Perfil.ADMIN); // Usuario Administrador
 
@@ -121,8 +121,8 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 		Locacao lc1 = new Locacao(null, LocalDateTime.now(), null, Situacao.A, fun1);
 		LocRepository.save(lc1);
 
-		LocacaoDetalhes dt1 = new LocacaoDetalhes(lc1, fm1, 10);
-		LocacaoDetalhes dt2 = new LocacaoDetalhes(lc1, fm2, 15);
+		LocacaoDetalhes dt1 = new LocacaoDetalhes(lc1, fm1, 2);
+		LocacaoDetalhes dt2 = new LocacaoDetalhes(lc1, fm2, 1);
 
 		lc1.getLocacaoDetalhes().addAll(Arrays.asList(dt1, dt2));
 

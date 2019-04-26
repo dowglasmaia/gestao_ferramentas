@@ -50,7 +50,9 @@ public class LocacaoService {
 		/* inserindo os detalhes na Requisição de Locação */
 		for (LocacaoDetalhes dt : obj.getLocacaoDetalhes()) {
 			dt.setFerramenta(fmService.buscarPorID(dt.getFerramenta().getCodigo()));
+			dt.getFerramenta().setEstoque(dt.getFerramenta().getEstoque() - dt.getQuantidade()); // Removendo Ferramenta do estoque apos salvar a Requisição
 			dt.setLocacao(obj);
+			
 		}
 		return repository.save(obj);
 	}

@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -37,7 +39,7 @@ public class Usuario implements Serializable {
 	@NotEmpty
 	private String nome;
 
-	@Column(length = 12, nullable = false, unique = true)
+	@Column(length = 12, nullable = false, unique = true)	
 	@NotEmpty(message = "Campo CPF Obrigatórido")
 	@CPF(message = "CPF Ínvalido")
 	private String cpf;
