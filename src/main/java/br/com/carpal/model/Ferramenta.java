@@ -6,19 +6,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
-
-import org.aspectj.weaver.ast.Literal;
-
+import br.com.carpal.model.enums.Obrigatoriedade;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 /**
  * @author Dowglas Maia Skype: live:dowglasmaia E-mail:dowglasmaia@live.com
@@ -45,16 +46,16 @@ public class Ferramenta implements Serializable {
 	private Integer codigoNh;
 
 	@Column
-	private String aplicabilidade;
-
-	@Column(length = 20)
-	private Integer quantidade;
+	private String aplicabilidade;	
 
 	@Column(length = 20)
 	private Integer estoque;
 
 	@Column(precision = 12, scale = 2)
 	private Double preco;
+
+	
+	private String obrigatoriedade;
 
 	@ManyToOne
 	private Fabricante fabricante;
@@ -63,7 +64,6 @@ public class Ferramenta implements Serializable {
 	@OneToMany(mappedBy = "codigo.ferramenta")
 	private Set<LocacaoDetalhes> locacaoDetalhes = new HashSet<>();
 
-	
 	@JsonIgnore
 	public List<Locacao> getListLocacoes() {
 		List<Locacao> lista = new ArrayList<>();
@@ -73,23 +73,23 @@ public class Ferramenta implements Serializable {
 		return lista;
 	}
 
-	
 	public Ferramenta() {
 
 	}
 
 	public Ferramenta(Long codigo, @NotEmpty String descricao, @NotEmpty String modelo, Integer codigoNh,
-			String aplicabilidade, Integer quantidade, Integer estoque, Double preco, Fabricante fabricante) {
+			String aplicabilidade, Integer estoque, Double preco,
+			String obrigatoriedade, Fabricante fabricante) {
+		super();
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.modelo = modelo;
 		this.codigoNh = codigoNh;
-		this.aplicabilidade = aplicabilidade;
-		this.quantidade = quantidade;
+		this.aplicabilidade = aplicabilidade;		
 		this.estoque = estoque;
 		this.preco = preco;
+		this.obrigatoriedade = obrigatoriedade;
 		this.fabricante = fabricante;
-
 	}
 
 	public Long getCodigo() {
@@ -132,13 +132,6 @@ public class Ferramenta implements Serializable {
 		this.aplicabilidade = aplicabilidade;
 	}
 
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
 
 	public Integer getEstoque() {
 		return estoque;
@@ -170,6 +163,16 @@ public class Ferramenta implements Serializable {
 
 	public void setLocacaoDetalhes(Set<LocacaoDetalhes> locacaoDetalhes) {
 		this.locacaoDetalhes = locacaoDetalhes;
+	}
+
+
+
+	public String getObrigatoriedade() {
+		return obrigatoriedade;
+	}
+
+	public void setObrigatoriedade(String obrigatoriedade) {
+		this.obrigatoriedade = obrigatoriedade;
 	}
 
 	@Override

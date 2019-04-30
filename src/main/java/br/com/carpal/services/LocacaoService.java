@@ -50,9 +50,11 @@ public class LocacaoService {
 		/* inserindo os detalhes na Requisição de Locação */
 		for (LocacaoDetalhes dt : obj.getLocacaoDetalhes()) {
 			dt.setFerramenta(fmService.buscarPorID(dt.getFerramenta().getCodigo()));
-			dt.getFerramenta().setEstoque(dt.getFerramenta().getEstoque() - dt.getQuantidade()); // Removendo Ferramenta do estoque apos salvar a Requisição
+
+			/* Removendo Ferramenta do estoque apos salvar a Requisição */
+			dt.getFerramenta().setEstoque(dt.getFerramenta().getEstoque() - dt.getQuantidade());
 			dt.setLocacao(obj);
-			
+
 		}
 		return repository.save(obj);
 	}
@@ -86,8 +88,8 @@ public class LocacaoService {
 
 		/* Definindo o Nome do arquivo */
 		File relatorio = File.createTempFile("requisicao", "pdf");
-		
-		/*instanciando um Session apartin de Uma EntityManager*/
+
+		/* instanciando um Session apartin de Uma EntityManager */
 		Session session = (Session) entityManager.getDelegate();
 		session.doWork(new Work() {
 

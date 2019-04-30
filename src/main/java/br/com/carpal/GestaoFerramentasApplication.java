@@ -17,9 +17,9 @@ import br.com.carpal.model.Funcionario;
 import br.com.carpal.model.Locacao;
 import br.com.carpal.model.LocacaoDetalhes;
 import br.com.carpal.model.Usuario;
+import br.com.carpal.model.enums.Obrigatoriedade;
 import br.com.carpal.model.enums.Perfil;
 import br.com.carpal.model.enums.Situacao;
-import br.com.carpal.repository.FuncionarioRepository;
 import br.com.carpal.repository.LocacaoDetalhesRepository;
 import br.com.carpal.repository.LocacaoRepository;
 import br.com.carpal.services.CargoService;
@@ -67,16 +67,20 @@ public class GestaoFerramentasApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		/* ================== Testando ================== ================== */
+		
+		
 
 		Fabricante f1 = new Fabricante(null, "CNH", "www.cnh.com.br");
 		fabricanteService.salvar(f1);
 
-		Ferramenta fm1 = new Ferramenta(null, "NM Parafusos", "montador", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
+		Ferramenta fm1 = new Ferramenta(null,"Chave","125",1254, "tes",10,25.0,"Recomendada", f1);
 		fmService.salvar(fm1);
-		Ferramenta fm2 = new Ferramenta(null, "Martelo cabeça", "Prego", 600, "Usar para Remover Teto", 10, 50, 50.0,
+		
+		Ferramenta fm2 = new Ferramenta(null, "Martelo cabeça", "Prego", 600, "Usar para Remover Teto", 50, 50.0,"Recomendada",
 				f1);
 		fmService.salvar(fm2);
-		Ferramenta fm3 = new Ferramenta(null, "NM Test03", "Chave de Trator", 250, "Usar para Remover Prego", 10, 20, 500.0, f1);
+		
+		Ferramenta fm3 = new Ferramenta(null, "NM Test03", "Chave de Trator", 250, "Usar para Remover Prego", 20, 500.0,"Obrigatorio", f1);
 		fmService.salvar(fm3);
 
 		Cargo c1 = new Cargo(null, "Assessor de TI");

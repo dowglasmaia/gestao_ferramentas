@@ -16,11 +16,10 @@ public class FerramentaService {
 
 	/* Salvar */
 	public Ferramenta salvar(Ferramenta obj) {
-		if (obj.getCodigo() == null) {
-			obj.setEstoque(obj.getQuantidade()); /* Atualizando o estoque */
+		if (obj.getCodigo() == null) {		
 			return repository.save(obj);
 		} else {
-			obj.setEstoque(obj.getEstoque() + obj.getQuantidade()); /* Atualizando o estoque */
+			obj.setEstoque(obj.getEstoque() + obj.getEstoque()); /* Atualizando o estoque */
 			return repository.update(obj);
 		}
 
