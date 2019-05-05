@@ -3,10 +3,12 @@ package br.com.carpal.config.security;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,7 +23,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // permite colocar anotações nos endpoints - para permissões de acesso, com perfil do usuario.
+@EnableGlobalMethodSecurity(prePostEnabled = true) // permite colocar anotações nos endpoints - para permissões de
+													// acesso, com perfil do usuario.
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -45,18 +48,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
-		
+
 		http.cors().and().csrf().disable();
-		http.authorizeRequests()
-				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
-				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
-				.antMatchers(PUBLIC_MATCHERS) 
-				.permitAll()  
-				.anyRequest().authenticated();  
-		
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil)); // Registrando o JWTAuthenticationFilter na conf do sp Securyti
-		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService)); //Reg. o filtro de autorização
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); 
+		http.authorizeRequests().antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+				.antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();
+
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil)); // Registrando o
+																						// JWTAuthenticationFilter na
+																						// conf do sp Securyti
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService)); // Reg. o
+																											// filtro de
+																											// autorização
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 
 	// autenticando o usario passando o cpf e a Senha autenticada e o tipo de
@@ -70,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
-		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS")); 
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
@@ -82,6 +85,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 
+	}
+
+	@Bean
+	public Jackson2ObjectMapperBuilderCustomizer dateCustomizer() {
+		return new Jackson2ObjectMapperBuilderCustomizer() {
+
+			@Override
+			public void customize(Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
+				jacksonObjectMapperBuilder.simpleDateFormat("dd/MM/yyyy hh:mm");
+
+			}
+
+		};
 	}
 
 }

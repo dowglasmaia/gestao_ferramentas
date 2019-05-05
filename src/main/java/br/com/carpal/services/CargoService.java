@@ -45,5 +45,6 @@ public class CargoService {
 		repository.delete(id);
 
 	}
+	
 
 }

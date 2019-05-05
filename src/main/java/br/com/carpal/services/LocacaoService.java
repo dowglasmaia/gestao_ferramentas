@@ -20,6 +20,7 @@ import org.springframework.util.ResourceUtils;
 import br.com.carpal.model.Locacao;
 import br.com.carpal.model.LocacaoDetalhes;
 import br.com.carpal.repository.LocacaoRepository;
+import br.com.carpal.repository.datajpa.LocacaoRepoJPA;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -35,6 +36,9 @@ public class LocacaoService {
 	private FerramentaService fmService;
 
 	@Autowired
+	private LocacaoRepoJPA locaRepo;
+
+	@Autowired
 	private UsuarioService usuarioService;
 
 	/* conexão para relatorio */
@@ -43,10 +47,9 @@ public class LocacaoService {
 
 	/* Salvar nova Requisição com os Datalhes */
 	public Locacao salvar(Locacao obj) {
-		obj.setCodigo(null);
+
 		obj.setDataHoraLocIn(LocalDateTime.now());
 		obj.setSituacao(obj.getSituacao().A);
-
 		/* inserindo os detalhes na Requisição de Locação */
 		for (LocacaoDetalhes dt : obj.getLocacaoDetalhes()) {
 			dt.setFerramenta(fmService.buscarPorID(dt.getFerramenta().getCodigo()));
@@ -56,7 +59,8 @@ public class LocacaoService {
 			dt.setLocacao(obj);
 
 		}
-		return repository.save(obj);
+		return locaRepo.save(obj);
+
 	}
 
 	/* Listar Todos */
@@ -113,6 +117,22 @@ public class LocacaoService {
 		});
 
 		return new FileInputStream(relatorio);
+	}
+
+	/* Locação Update - Baixar Requisição */
+	public Locacao update(Locacao obj) {
+		Locacao newObj = buscarPorID(obj.getCodigo());		
+		 updateData(newObj, obj);
+		
+		return locaRepo.save(newObj);
+
+	}
+
+	// metodo auxilar para atualizar
+	private void updateData(Locacao newObj, Locacao obj) {
+		newObj.setDataHoraLocEnd(LocalDateTime.now()); // Baixar a Requisição com a Hora do Sistema.
+		newObj.setSituacao(obj.getSituacao().F); // Fechar a Requisição.
+		
 	}
 
 }

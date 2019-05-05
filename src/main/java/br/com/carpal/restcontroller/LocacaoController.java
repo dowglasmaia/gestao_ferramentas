@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.carpal.model.Locacao;
@@ -66,15 +67,23 @@ public class LocacaoController {
 	public void findRelatorio(HttpServletResponse response) {
 		try {
 			IOUtils.copy(service.relatorio(), response.getOutputStream());
-			
-			//Setando o Tipo de arquivo para a Aplicação Cliente(Navegador"
+
+			// Setando o Tipo de arquivo para a Aplicação Cliente(Navegador"
 			response.setContentType("application/pdf");
-			
-			//enviando os Dados na Resposta da requisição
-			response.flushBuffer();			
+
+			// enviando os Dados na Resposta da requisição
+			response.flushBuffer();
 		} catch (Exception e) {
 			throw new FileException(e.getMessage());
 		}
+	}
+
+	@RequestMapping(value = "/{codigo}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Locacao obj, @PathVariable Long codigo) {
+		obj.setCodigo(codigo);
+		System.out.println(" O CODIGO É :" + codigo);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 
 }

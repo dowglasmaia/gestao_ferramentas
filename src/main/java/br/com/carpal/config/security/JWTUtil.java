@@ -23,7 +23,7 @@ public class JWTUtil {
 	public String generateToken(String cpf) {
 		return Jwts.builder()
 		.setSubject(cpf) // Usuario
-		.setExpiration(new Date(System.currentTimeMillis() + expiration)) // tempo de expiranção
+		.setExpiration(new Date(System.currentTimeMillis() + (60 * 60000))) // tempo de expiranção
 		.signWith(SignatureAlgorithm.HS512, secret.getBytes()) // algoritimo de Cryptografia +  a palavra secreta criada, garantindo uma token mas seguro.
 		.compact();
 	}
