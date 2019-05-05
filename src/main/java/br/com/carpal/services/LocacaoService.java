@@ -122,8 +122,7 @@ public class LocacaoService {
 	/* Locação Update - Baixar Requisição */
 	public Locacao update(Locacao obj) {
 		Locacao newObj = buscarPorID(obj.getCodigo());		
-		 updateData(newObj, obj);
-		
+		 updateData(newObj, obj);		
 		return locaRepo.save(newObj);
 
 	}
